@@ -364,10 +364,14 @@
             const pointMeshes = points.map(p => p.point);
             const intersects = raycaster.intersectObjects(pointMeshes);
 
-            if (intersects.length > 0) {
+            // Only consider points on the front side of the globe
+            const globeDistance = camera.position.z;
+            const frontIntersects = intersects.filter(i => i.distance < globeDistance);
+
+            if (frontIntersects.length > 0) {
                 // Sort by distance and get the closest one
-                intersects.sort((a, b) => a.distance - b.distance);
-                const playlist = intersects[0].object.userData.playlist;
+                frontIntersects.sort((a, b) => a.distance - b.distance);
+                const playlist = frontIntersects[0].object.userData.playlist;
                 tooltip.style.display = 'block';
                 tooltip.style.left = event.clientX + 15 + 'px';
                 tooltip.style.top = event.clientY + 15 + 'px';
@@ -415,8 +419,15 @@
             if (intersects.length > 0) {
                 // Sort by distance and get the closest one
                 intersects.sort((a, b) => a.distance - b.distance);
-                const playlist = intersects[0].object.userData.playlist;
-                openPlaylist(playlist);
+
+                // Only select points on the front side of the globe (closer than globe center)
+                const globeDistance = camera.position.z;
+                const closest = intersects.find(i => i.distance < globeDistance);
+
+                if (closest) {
+                    const playlist = closest.object.userData.playlist;
+                    openPlaylist(playlist);
+                }
             }
         }
 
