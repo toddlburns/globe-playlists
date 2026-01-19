@@ -365,6 +365,8 @@
             const intersects = raycaster.intersectObjects(pointMeshes);
 
             if (intersects.length > 0) {
+                // Sort by distance and get the closest one
+                intersects.sort((a, b) => a.distance - b.distance);
                 const playlist = intersects[0].object.userData.playlist;
                 tooltip.style.display = 'block';
                 tooltip.style.left = event.clientX + 15 + 'px';
@@ -411,6 +413,8 @@
             const intersects = raycaster.intersectObjects(pointMeshes);
 
             if (intersects.length > 0) {
+                // Sort by distance and get the closest one
+                intersects.sort((a, b) => a.distance - b.distance);
                 const playlist = intersects[0].object.userData.playlist;
                 openPlaylist(playlist);
             }
