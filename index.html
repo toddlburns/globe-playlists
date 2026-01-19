@@ -186,56 +186,8 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="playlists-data.js"></script>
     <script>
-        // ============================================
-        // PLAYLIST CONFIGURATION - Edit your playlists here!
-        // ============================================
-        const playlists = [
-            {
-                name: "Tokyo Nights",
-                location: "Tokyo, Japan",
-                lat: 35.6762,
-                lng: 139.6503,
-                spotifyId: "37i9dQZF1DXd9rSDyQguIk"  // Example: Tokyo playlist
-            },
-            {
-                name: "Berlin Techno",
-                location: "Berlin, Germany",
-                lat: 52.5200,
-                lng: 13.4050,
-                spotifyId: "37i9dQZF1DX6J5NfMJS675"  // Example: Berlin playlist
-            },
-            {
-                name: "Brazilian Beats",
-                location: "Rio de Janeiro, Brazil",
-                lat: -22.9068,
-                lng: -43.1729,
-                spotifyId: "37i9dQZF1DX1ngEVM0lKrb"  // Example: Brazil playlist
-            },
-            {
-                name: "NYC Hip Hop",
-                location: "New York, USA",
-                lat: 40.7128,
-                lng: -74.0060,
-                spotifyId: "37i9dQZF1DX0XUsuxWHRQd"  // Example: Hip Hop playlist
-            },
-            {
-                name: "Lagos Afrobeats",
-                location: "Lagos, Nigeria",
-                lat: 6.5244,
-                lng: 3.3792,
-                spotifyId: "37i9dQZF1DWYkaDif7Ztbp"  // Example: Afrobeats playlist
-            },
-            {
-                name: "London Grime",
-                location: "London, UK",
-                lat: 51.5074,
-                lng: -0.1278,
-                spotifyId: "37i9dQZF1DXcRuAqrMOSgp"  // Example: UK playlist
-            }
-        ];
-        // ============================================
-
         let scene, camera, renderer, globe, points = [];
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
@@ -369,8 +321,8 @@
             playlists.forEach((playlist, index) => {
                 const position = latLngToVector3(playlist.lat, playlist.lng, 1.02);
 
-                // Glowing point
-                const pointGeometry = new THREE.SphereGeometry(0.025, 16, 16);
+                // Glowing point (smaller for many playlists)
+                const pointGeometry = new THREE.SphereGeometry(0.012, 12, 12);
                 const pointMaterial = new THREE.MeshBasicMaterial({
                     color: 0x00ff00,
                     transparent: true,
@@ -380,36 +332,8 @@
                 point.position.copy(position);
                 point.userData = { playlist, index };
 
-                // Outer glow ring
-                const ringGeometry = new THREE.RingGeometry(0.03, 0.045, 16);
-                const ringMaterial = new THREE.MeshBasicMaterial({
-                    color: 0x00ff00,
-                    side: THREE.DoubleSide,
-                    transparent: true,
-                    opacity: 0.5
-                });
-                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-                ring.position.copy(position);
-                ring.lookAt(0, 0, 0);
-                ring.userData = { isRing: true, parentPoint: point };
-
-                // Pulsing animation ring
-                const pulseGeometry = new THREE.RingGeometry(0.05, 0.055, 16);
-                const pulseMaterial = new THREE.MeshBasicMaterial({
-                    color: 0x00ff00,
-                    side: THREE.DoubleSide,
-                    transparent: true,
-                    opacity: 0.3
-                });
-                const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
-                pulse.position.copy(position);
-                pulse.lookAt(0, 0, 0);
-                pulse.userData = { isPulse: true, baseScale: 1 };
-
                 globe.add(point);
-                globe.add(ring);
-                globe.add(pulse);
-                points.push({ point, ring, pulse, playlist });
+                points.push({ point, playlist });
             });
         }
 
@@ -531,14 +455,6 @@
                     }
                 }
             }
-
-            // Animate pulse rings
-            const time = Date.now() * 0.001;
-            points.forEach((p, i) => {
-                const scale = 1 + Math.sin(time * 2 + i) * 0.3;
-                p.pulse.scale.set(scale, scale, scale);
-                p.pulse.material.opacity = 0.3 * (1 - (scale - 1) / 0.3);
-            });
 
             renderer.render(scene, camera);
         }
