@@ -344,6 +344,7 @@
             renderer.domElement.addEventListener('mouseleave', onMouseUp);
             renderer.domElement.addEventListener('wheel', onWheel);
             renderer.domElement.addEventListener('click', onClick);
+            renderer.domElement.addEventListener('dblclick', onDoubleClick);
             window.addEventListener('resize', onWindowResize);
             document.getElementById('close-panel').addEventListener('click', closePanel);
         }
@@ -413,6 +414,11 @@
                 const playlist = intersects[0].object.userData.playlist;
                 openPlaylist(playlist);
             }
+        }
+
+        function onDoubleClick(event) {
+            // Resume rotation on double click
+            autoRotate = true;
         }
 
         function openPlaylist(playlist) {
