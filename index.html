@@ -401,6 +401,10 @@
         }
 
         function onClick(event) {
+            // Stop rotation on any click
+            autoRotate = false;
+            rotationVelocity = { x: 0, y: 0 };
+
             raycaster.setFromCamera(mouse, camera);
             const pointMeshes = points.map(p => p.point);
             const intersects = raycaster.intersectObjects(pointMeshes);
@@ -441,18 +445,14 @@
 
             // Auto rotation when not dragging
             if (autoRotate) {
-                globe.rotation.y += 0.002;
+                globe.rotation.y += 0.0005;
             } else {
-                // Momentum
+                // Momentum after dragging
                 if (!isDragging) {
                     rotationVelocity.x *= 0.95;
                     rotationVelocity.y *= 0.95;
                     globe.rotation.x += rotationVelocity.x;
                     globe.rotation.y += rotationVelocity.y;
-
-                    if (Math.abs(rotationVelocity.x) < 0.0001 && Math.abs(rotationVelocity.y) < 0.0001) {
-                        autoRotate = true;
-                    }
                 }
             }
 
