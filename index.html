@@ -373,49 +373,37 @@
         }
 
         #intro-text {
-            font-family: 'Brush Script MT', 'Segoe Script', 'Bradley Hand', 'Pacifico', cursive;
-            font-size: 80px;
-            font-weight: normal;
-            letter-spacing: 4px;
-            background: linear-gradient(90deg, #ff1493, #ff69b4, #00bfff, #87ceeb, #ff1493);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter:
-                drop-shadow(0 0 5px #ff1493)
-                drop-shadow(0 0 10px #ff69b4)
-                drop-shadow(0 0 15px #00bfff)
-                drop-shadow(0 0 25px #87ceeb)
-                drop-shadow(0 0 35px #ff69b4)
-                drop-shadow(0 0 50px #00bfff);
-            animation: neon-gradient 3s linear infinite;
+            font-family: 'Courier New', monospace;
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #00ff00;
+            text-shadow:
+                0 0 5px #00ff00,
+                0 0 10px #00ff00,
+                0 0 20px #00ff00,
+                0 0 40px #00ff00,
+                0 0 80px #003300;
             opacity: 0;
-        }
-
-        @keyframes neon-gradient {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
         }
 
         @keyframes neon-pulse {
             0% {
-                filter:
-                    drop-shadow(0 0 5px #ff1493)
-                    drop-shadow(0 0 10px #ff69b4)
-                    drop-shadow(0 0 15px #00bfff)
-                    drop-shadow(0 0 25px #87ceeb)
-                    drop-shadow(0 0 35px #ff69b4)
-                    drop-shadow(0 0 50px #00bfff);
+                text-shadow:
+                    0 0 5px #00ff00,
+                    0 0 10px #00ff00,
+                    0 0 20px #00ff00,
+                    0 0 40px #00ff00,
+                    0 0 80px #003300;
             }
             100% {
-                filter:
-                    drop-shadow(0 0 8px #ff1493)
-                    drop-shadow(0 0 15px #ff69b4)
-                    drop-shadow(0 0 20px #00bfff)
-                    drop-shadow(0 0 35px #87ceeb)
-                    drop-shadow(0 0 50px #ff69b4)
-                    drop-shadow(0 0 70px #00bfff);
+                text-shadow:
+                    0 0 10px #00ff00,
+                    0 0 20px #00ff00,
+                    0 0 40px #00ff00,
+                    0 0 60px #00ff00,
+                    0 0 100px #003300;
             }
         }
 
@@ -455,7 +443,7 @@
         }
 
         #intro-text.flicker-in {
-            animation: flicker-in 0.8s ease forwards, neon-gradient 3s linear infinite, neon-pulse 2s ease-in-out infinite alternate;
+            animation: flicker-in 0.8s ease forwards, neon-pulse 2s ease-in-out infinite alternate;
         }
 
         #intro-text.flicker-out {
