@@ -176,16 +176,16 @@ const playlists = [
   },
   {
     "name": "Aleksi Perälä, Ambient",
-    "location": "London, UK",
-    "lat": 49.88647948271131,
-    "lng": 0.08703366963594542,
+    "location": "Helsinki, Finland",
+    "lat": 60.1699,
+    "lng": 25.238400000000002,
     "spotifyId": "13FHf7pS4BFYgpSMO5cQ5t"
   },
   {
     "name": "Aleksi Perälä, Ambient Beats",
-    "location": "London, UK",
-    "lat": 50.42132978933148,
-    "lng": -0.5570031167591786,
+    "location": "Helsinki, Finland",
+    "lat": 60.492710240904785,
+    "lng": 25.251918019206226,
     "spotifyId": "49kbHTAr0darDpdHdHdOFk"
   },
   {
@@ -239,51 +239,51 @@ const playlists = [
   },
   {
     "name": "Ambient, Ancient",
-    "location": "London, UK",
-    "lat": 52.09933813125862,
-    "lng": -0.18252389384994525,
+    "location": "Jericho",
+    "lat": 31.8611,
+    "lng": 35.759699999999995,
     "spotifyId": "7AWO9lCenDDqGEMc5VwZzz"
   },
   {
     "name": "Ambient, Balearic",
-    "location": "London, UK",
-    "lat": 50.601152204653886,
-    "lng": 1.4115780935144426,
+    "location": "Ibiza, Spain",
+    "lat": 38.9067,
+    "lng": 1.7206000000000001,
     "spotifyId": "3h6tiKA7760RuHroRq4VUV"
   },
   {
     "name": "Ambient, Classical Swells",
-    "location": "London, UK",
-    "lat": 53.07447060488095,
-    "lng": 0.09044814978792429,
+    "location": "Austin, USA",
+    "lat": 30.2672,
+    "lng": -97.4431,
     "spotifyId": "2prFQwqRESbg7m2yLW8TIA"
   },
   {
     "name": "Ambient, Country",
-    "location": "London, UK",
-    "lat": 51.13694235443241,
-    "lng": 1.5234031779896513,
+    "location": "Asheville, USA",
+    "lat": 35.5951,
+    "lng": -82.25150000000001,
     "spotifyId": "63tLUvVN2cyufFq9VBNB73"
   },
   {
     "name": "Ambient, Faded",
-    "location": "London, UK",
-    "lat": 53.42000313160757,
-    "lng": -0.3253014794630301,
+    "location": "English Countryside",
+    "lat": 51.5074,
+    "lng": -1.2,
     "spotifyId": "4WIR9yiqhfdvTHRhqGGqON"
   },
   {
     "name": "Ambient, Floating",
-    "location": "London, UK",
-    "lat": 49.737342097351785,
-    "lng": -1.3638599989831477,
+    "location": "San Diego, USA",
+    "lat": 32.7157,
+    "lng": -116.86110000000001,
     "spotifyId": "49zrvR1Mph2kjThFHrhXhw"
   },
   {
     "name": "Ambient, Heartstrings",
-    "location": "London, UK",
-    "lat": 50.36973808358999,
-    "lng": -1.667782269255991,
+    "location": "Cologne, Germany",
+    "lat": 50.9375,
+    "lng": 7.2603,
     "spotifyId": "0czY51CRWCFNciREa0KMWS"
   },
   {
@@ -337,9 +337,9 @@ const playlists = [
   },
   {
     "name": "Ambient, Japan",
-    "location": "London, UK",
-    "lat": 52.01157359559718,
-    "lng": 0.4175065150012879,
+    "location": "Tokyo, Japan",
+    "lat": 35.6762,
+    "lng": 139.9503,
     "spotifyId": "04qAy2I5Ojwp0hatwcTUQf"
   },
   {
@@ -365,16 +365,16 @@ const playlists = [
   },
   {
     "name": "Ambient, Kompakt Queasy",
-    "location": "London, UK",
-    "lat": 52.86111430436083,
-    "lng": -1.939344917163843,
+    "location": "Cologne, Germany",
+    "lat": 51.260310240904786,
+    "lng": 7.2738180192062245,
     "spotifyId": "5yMc5m6k38mikLv55hYZrp"
   },
   {
     "name": "Ambient, Outer Space",
-    "location": "London, UK",
-    "lat": 49.9849742371283,
-    "lng": -1.9918121926202625,
+    "location": "San Diego, USA",
+    "lat": 33.038510240904785,
+    "lng": -116.84758198079378,
     "spotifyId": "0IvCfBCJhAwRBapKm9eXsp"
   },
   {
@@ -393,16 +393,16 @@ const playlists = [
   },
   {
     "name": "Ambient, Techno",
-    "location": "Detroit, USA",
-    "lat": 43.21191014429623,
-    "lng": -84.42966779935432,
+    "location": "London, UK",
+    "lat": 51.5074,
+    "lng": 0.1722,
     "spotifyId": "5fs3FTwvwtq8YVSOmc0qRt"
   },
   {
     "name": "Ambient, Water",
-    "location": "London, UK",
-    "lat": 52.13420636190012,
-    "lng": -0.4591847077516261,
+    "location": "Tokyo, Japan",
+    "lat": 35.99901024090479,
+    "lng": 139.9638180192062,
     "spotifyId": "0l4dVLG5CXpkkTFWRTbIfP"
   },
   {
@@ -421,9 +421,9 @@ const playlists = [
   },
   {
     "name": "Yet They Say, Vol. 1",
-    "location": "London, UK",
-    "lat": 50.00569575930726,
-    "lng": -0.19371508654205213,
+    "location": "Cincinnati, USA",
+    "lat": 39.1031,
+    "lng": -84.212,
     "spotifyId": "7r9P1JViiAMM5H9n2Qjb7b"
   },
   {
@@ -442,51 +442,51 @@ const playlists = [
   },
   {
     "name": "ASC, Ambient",
-    "location": "London, UK",
-    "lat": 50.801913852428676,
-    "lng": 0.2885585926097912,
+    "location": "San Diego, USA",
+    "lat": 33.3154441618249,
+    "lng": -117.17861971338078,
     "spotifyId": "2GTdCjTWSe4aLFjexf6xas"
   },
   {
     "name": "ASC, Drum & Bass Dark",
-    "location": "London, UK",
-    "lat": 49.70252987092128,
-    "lng": -1.3162876825088523,
+    "location": "San Diego, USA",
+    "lat": 33.22229738541336,
+    "lng": -117.71414528665593,
     "spotifyId": "66FMyWSL4ai8HLFFEx8qeC"
   },
   {
     "name": "ASC, Drum & Bass Light",
-    "location": "London, UK",
-    "lat": 53.291686405217725,
-    "lng": -0.6440917987100526,
+    "location": "San Diego, USA",
+    "lat": 32.66316327091518,
+    "lng": -118.05956529821528,
     "spotifyId": "3YTUUD1qFCJdi6tA2CPJ2m"
   },
   {
     "name": "ASC, Electronica Dark",
-    "location": "London, UK",
-    "lat": 49.612197680760254,
-    "lng": -0.6775336302572578,
+    "location": "San Diego, USA",
+    "lat": 31.921057379926673,
+    "lng": -117.8474258019068,
     "spotifyId": "31fRkBUVMyAiEIextWgg1S"
   },
   {
     "name": "ASC, Electronica Light",
-    "location": "London, UK",
-    "lat": 50.43434539058052,
-    "lng": -1.5323313566592909,
+    "location": "San Diego, USA",
+    "lat": 31.520302469396988,
+    "lng": -117.05610121987267,
     "spotifyId": "4rPufV1Gi5hU04fma7ePV9"
   },
   {
     "name": "ASC, Starter Pack",
-    "location": "London, UK",
-    "lat": 51.845656137291236,
-    "lng": -2.0764381096062636,
+    "location": "San Diego, USA",
+    "lat": 31.863490038872364,
+    "lng": -116.11408606401116,
     "spotifyId": "41LddJ20d8OEEn0JS4dPG5"
   },
   {
     "name": "ASC, Techno",
-    "location": "Detroit, USA",
-    "lat": 42.429010981810904,
-    "lng": -84.83000136734238,
+    "location": "San Diego, USA",
+    "lat": 32.89052380727574,
+    "lng": -115.67132262186271,
     "spotifyId": "0xqNI7zlmk1WxI9BjC5dZ8"
   },
   {
@@ -540,16 +540,16 @@ const playlists = [
   },
   {
     "name": "Atom TM, Latin Experimental",
-    "location": "Mexico City, Mexico",
-    "lat": 21.248217636690853,
-    "lng": -100.08751455322287,
+    "location": "Santiago, Chile",
+    "lat": -33.4489,
+    "lng": -70.36930000000001,
     "spotifyId": "79MA3K9hkgNXw2WzI0qZT9"
   },
   {
     "name": "Atom TM, Latin Pop",
-    "location": "Mexico City, Mexico",
-    "lat": 19.398547529401778,
-    "lng": -99.91931447930767,
+    "location": "Santiago, Chile",
+    "lat": -33.126089759095215,
+    "lng": -70.35578198079378,
     "spotifyId": "7oVg1AjG18TjKEMwzTwKXV"
   },
   {
@@ -589,9 +589,9 @@ const playlists = [
   },
   {
     "name": "Autumn",
-    "location": "London, UK",
-    "lat": 50.05723940336635,
-    "lng": 0.5287475087594263,
+    "location": "Brussels, Belgium",
+    "lat": 50.8503,
+    "lng": 4.6517,
     "spotifyId": "6UhnY0JKXAIp7lpemR460r"
   },
   {
@@ -687,72 +687,72 @@ const playlists = [
   },
   {
     "name": "By The Way, Vol. 1",
-    "location": "London, UK",
-    "lat": 51.78986347173367,
-    "lng": 0.6810348857668714,
+    "location": "Cincinnati, USA",
+    "lat": 39.425910240904784,
+    "lng": -84.19848198079377,
     "spotifyId": "4UbuFLeWj0Kd7zzSZ0Y9QA"
   },
   {
     "name": "By The Way, Vol. 10",
-    "location": "London, UK",
-    "lat": 52.52663650674262,
-    "lng": -1.795957861073066,
+    "location": "Cincinnati, USA",
+    "lat": 39.7028441618249,
+    "lng": -84.52951971338078,
     "spotifyId": "0doEtzxM03IrKqkym3vxLx"
   },
   {
     "name": "By The Way, Vol. 2",
-    "location": "London, UK",
-    "lat": 50.801137185734696,
-    "lng": -0.6005944614283395,
+    "location": "Cincinnati, USA",
+    "lat": 39.60969738541336,
+    "lng": -85.06504528665593,
     "spotifyId": "5QkFOYKOH5mGMhjcuER0gv"
   },
   {
     "name": "By The Way, Vol. 3",
-    "location": "London, UK",
-    "lat": 51.68834717133185,
-    "lng": -1.1009284760552698,
+    "location": "Cincinnati, USA",
+    "lat": 39.05056327091518,
+    "lng": -85.41046529821527,
     "spotifyId": "4AG6XFDIQ1Fzlj3GpZnkxb"
   },
   {
     "name": "By The Way, Vol. 4",
-    "location": "London, UK",
-    "lat": 49.78153885976399,
-    "lng": 0.385007817916868,
+    "location": "Cincinnati, USA",
+    "lat": 38.30845737992667,
+    "lng": -85.19832580190679,
     "spotifyId": "4O9w0ca5V7bdw8TiK9Qvkc"
   },
   {
     "name": "By The Way, Vol. 5",
-    "location": "London, UK",
-    "lat": 49.939835354159435,
-    "lng": 0.7081895031632351,
+    "location": "Cincinnati, USA",
+    "lat": 37.90770246939699,
+    "lng": -84.40700121987267,
     "spotifyId": "1mdsTvjqzg9glSr7bWpgAR"
   },
   {
     "name": "By The Way, Vol. 6",
-    "location": "London, UK",
-    "lat": 49.69353750816545,
-    "lng": -0.9142251364799913,
+    "location": "Cincinnati, USA",
+    "lat": 38.25089003887236,
+    "lng": -83.46498606401116,
     "spotifyId": "6qbLpNK4g0JNqcp9ccw2IZ"
   },
   {
     "name": "By The Way, Vol. 6",
-    "location": "London, UK",
-    "lat": 50.75115965047129,
-    "lng": 0.07026411606179708,
+    "location": "Cincinnati, USA",
+    "lat": 39.27792380727574,
+    "lng": -83.02222262186271,
     "spotifyId": "6qbLpNK4g0JNqcp9ccw2IZ"
   },
   {
     "name": "By The Way, Vol. 8",
-    "location": "London, UK",
-    "lat": 49.52597841390907,
-    "lng": -1.9662325359206927,
+    "location": "Cincinnati, USA",
+    "lat": 40.4126519753511,
+    "lng": -83.50822033102177,
     "spotifyId": "3LrFR2CBxvGPB1k50HA3vD"
   },
   {
     "name": "By The Way, Vol. 9",
-    "location": "London, UK",
-    "lat": 49.594492904298264,
-    "lng": 0.20677546434038221,
+    "location": "Cincinnati, USA",
+    "lat": 40.88394484392209,
+    "lng": -84.77390006085551,
     "spotifyId": "0Nk04NfUz4lGUTo1Fqdw8Y"
   },
   {
@@ -771,9 +771,9 @@ const playlists = [
   },
   {
     "name": "Chill Worldwide",
-    "location": "London, UK",
-    "lat": 51.32384536476856,
-    "lng": 1.3663464728769614,
+    "location": "Sahara Desert",
+    "lat": 23.4162,
+    "lng": 12.3,
     "spotifyId": "3dMCpjhAA3OjJleYu4yZ8U"
   },
   {
@@ -890,16 +890,16 @@ const playlists = [
   },
   {
     "name": "Electronic, Downtempo",
-    "location": "Berlin, Germany",
-    "lat": 52.04837872865069,
-    "lng": 13.69302520713629,
+    "location": "London, UK",
+    "lat": 51.83021024090478,
+    "lng": 0.1857180192062244,
     "spotifyId": "14tVly3NHzR2xGsyAqnQD7"
   },
   {
     "name": "Electronic, Experimental Chill",
-    "location": "Berlin, Germany",
-    "lat": 53.13255475460187,
-    "lng": 13.980774733956203,
+    "location": "Frankfurt, Germany",
+    "lat": 50.1109,
+    "lng": 8.9821,
     "spotifyId": "2kHGKcLMa08TuhKhYIOor4"
   },
   {
@@ -911,9 +911,9 @@ const playlists = [
   },
   {
     "name": "Electronic, Imaginary Jungles",
-    "location": "Berlin, Germany",
-    "lat": 53.957622616897694,
-    "lng": 14.785902610500706,
+    "location": "Amazon Rainforest",
+    "lat": -3.4653,
+    "lng": -61.9159,
     "spotifyId": "7ofatheLbWhDDx1WQ0gM2E"
   },
   {
@@ -925,9 +925,9 @@ const playlists = [
   },
   {
     "name": "Electronic, Melancholic Breakbeats",
-    "location": "Berlin, Germany",
-    "lat": 51.6392595445875,
-    "lng": 12.148258282048488,
+    "location": "London, UK",
+    "lat": 52.1071441618249,
+    "lng": -0.1453197133807733,
     "spotifyId": "0ugIbsmXT7xQCF24WvqXTP"
   },
   {
@@ -953,16 +953,16 @@ const playlists = [
   },
   {
     "name": "Electronica, Light",
-    "location": "Berlin, Germany",
-    "lat": 51.24273358001419,
-    "lng": 15.360826631626903,
+    "location": "London, UK",
+    "lat": 52.01399738541336,
+    "lng": -0.6808452866559344,
     "spotifyId": "2drGk1NoK2uliqh0j3KEIS"
   },
   {
     "name": "Elvis, Rockin'",
-    "location": "London, UK",
-    "lat": 52.74743606325773,
-    "lng": -2.0860952543000795,
+    "location": "Memphis, USA",
+    "lat": 35.1495,
+    "lng": -89.74900000000001,
     "spotifyId": "324FB8PjZlIPTo1iE3goGS"
   },
   {
@@ -995,9 +995,9 @@ const playlists = [
   },
   {
     "name": "Experimental, Ancient",
-    "location": "New York, USA",
-    "lat": 41.55317752606956,
-    "lng": -72.69385879653946,
+    "location": "Jericho",
+    "lat": 32.18391024090479,
+    "lng": 35.773218019206226,
     "spotifyId": "3VvmF9WRJDFtSOswhMhd0u"
   },
   {
@@ -1023,9 +1023,9 @@ const playlists = [
   },
   {
     "name": "Experimental, Guitar Glitch Ambient",
-    "location": "London, UK",
-    "lat": 50.170064768944705,
-    "lng": 1.0000374844683921,
+    "location": "Cologne, Germany",
+    "lat": 51.5372441618249,
+    "lng": 6.942780286619227,
     "spotifyId": "6SkxYE5NBMEXwEdRyF0u5F"
   },
   {
@@ -1073,8 +1073,8 @@ const playlists = [
   {
     "name": "Flanger",
     "location": "Cologne, Germany",
-    "lat": 52.14982873814671,
-    "lng": 7.461422059593933,
+    "lat": 51.444097385413365,
+    "lng": 6.407254713344066,
     "spotifyId": "3ae9hVmttiHPHxXRjsJpXH"
   },
   {
@@ -1254,9 +1254,9 @@ const playlists = [
   },
   {
     "name": "House, Ambient",
-    "location": "Chicago, USA",
-    "lat": 42.43619780833165,
-    "lng": -88.11676881862152,
+    "location": "London, UK",
+    "lat": 51.454863270915176,
+    "lng": -1.0262652982152778,
     "spotifyId": "6mgF0aptvQFOXqzhQUd5as"
   },
   {
@@ -1520,9 +1520,9 @@ const playlists = [
   },
   {
     "name": "Minimalism",
-    "location": "Berlin, Germany",
-    "lat": 51.88938912607063,
-    "lng": 15.243149611367175,
+    "location": "New York, USA",
+    "lat": 40.7128,
+    "lng": -73.706,
     "spotifyId": "4gWPyGP3YQ0pEwvjGrppui"
   },
   {
@@ -1660,16 +1660,16 @@ const playlists = [
   },
   {
     "name": "Post-Rock, Chiming Guitars",
-    "location": "London, UK",
-    "lat": 50.875415647893874,
-    "lng": 1.070059267336388,
+    "location": "Louisville, USA",
+    "lat": 38.2527,
+    "lng": -85.4585,
     "spotifyId": "4INhC3FsHQjrSkT32DQ3O1"
   },
   {
     "name": "Post-Rock, Crescendo-Core",
-    "location": "London, UK",
-    "lat": 51.44287290745971,
-    "lng": 0.8612933190064741,
+    "location": "Glasgow, Scotland",
+    "lat": 55.8642,
+    "lng": -3.9518000000000004,
     "spotifyId": "1CW3BeW1dhuoeYQmpJxTlb"
   },
   {
@@ -1807,16 +1807,16 @@ const playlists = [
   },
   {
     "name": "Rock, Classic Rock Radio",
-    "location": "London, UK",
-    "lat": 51.42508279566708,
-    "lng": 1.869272202972265,
+    "location": "Cincinnati, USA",
+    "lat": 40.24368852613893,
+    "lng": -86.09363137742022,
     "spotifyId": "2IPPTvXMybu0a7Kxpucyt6"
   },
   {
     "name": "Rock, Early",
-    "location": "London, UK",
-    "lat": 52.79927457220562,
-    "lng": 0.8240096774441149,
+    "location": "Memphis, USA",
+    "lat": 35.47231024090479,
+    "lng": -89.73548198079378,
     "spotifyId": "4sU6xgGgzq1rvTwIr9pn2g"
   },
   {
@@ -1863,23 +1863,23 @@ const playlists = [
   },
   {
     "name": "Schaffel Brutal",
-    "location": "Frankfurt, Germany",
-    "lat": 49.10969017686785,
-    "lng": 8.443927879621771,
+    "location": "Cologne, Germany",
+    "lat": 50.88496327091518,
+    "lng": 6.061834701784722,
     "spotifyId": "5G5wz4LA2FTM6bFWlC5RYl"
   },
   {
     "name": "Schaffel Dance",
-    "location": "Frankfurt, Germany",
-    "lat": 49.608979331222805,
-    "lng": 9.335132554154352,
+    "location": "Cologne, Germany",
+    "lat": 50.142857379926674,
+    "lng": 6.2739741980932076,
     "spotifyId": "7jboEdkfT4WVRFsfkEB0PT"
   },
   {
     "name": "Schaffel Pop",
-    "location": "Frankfurt, Germany",
-    "lat": 49.14443963057616,
-    "lng": 8.358417454595577,
+    "location": "Cologne, Germany",
+    "lat": 49.74210246939699,
+    "lng": 7.065298780127337,
     "spotifyId": "31058wKDUlYfoDC2CaQbJO"
   },
   {
@@ -1912,9 +1912,9 @@ const playlists = [
   },
   {
     "name": "Ska, Punk",
-    "location": "Kingston, Jamaica",
-    "lat": 19.990019229734507,
-    "lng": -77.32186437463464,
+    "location": "Orange County, USA",
+    "lat": 33.7175,
+    "lng": -117.53110000000001,
     "spotifyId": "7M2YkCrreZcCo1y2dAezji"
   },
   {
@@ -1933,9 +1933,9 @@ const playlists = [
   },
   {
     "name": "Solo Guitar",
-    "location": "Seville, Spain",
-    "lat": 37.97868713025896,
-    "lng": -4.89548902100564,
+    "location": "Rural Arkansas, USA",
+    "lat": 35.201,
+    "lng": -91.5318,
     "spotifyId": "79BmpH4MjeMOXURUAKtkqP"
   },
   {
@@ -1996,16 +1996,16 @@ const playlists = [
   },
   {
     "name": "STL",
-    "location": "Stockholm, Sweden",
-    "lat": 60.66663930972626,
-    "lng": 16.965598783640363,
+    "location": "Frankfurt, Germany",
+    "lat": 50.43371024090479,
+    "lng": 8.995618019206225,
     "spotifyId": "6adaBoksgJLDOLG3EAXyFS"
   },
   {
     "name": "Summer Patio Songs",
     "location": "Los Angeles, USA",
-    "lat": 33.43478013969508,
-    "lng": -118.00100136295751,
+    "lat": 34.0522,
+    "lng": -117.9437,
     "spotifyId": "6MTgMAQnjy5Mndnnkp7IqF"
   },
   {
@@ -2038,16 +2038,16 @@ const playlists = [
   },
   {
     "name": "Synth, Modular Experiments",
-    "location": "Düsseldorf, Germany",
-    "lat": 52.52329027508659,
-    "lng": 8.294482462313713,
+    "location": "Los Angeles, USA",
+    "lat": 34.375010240904786,
+    "lng": -117.93018198079378,
     "spotifyId": "7KHbhmrCNBAfNV3RjtI2Z1"
   },
   {
     "name": "Synth, Modular Heartstrings",
-    "location": "Düsseldorf, Germany",
-    "lat": 50.34298227639714,
-    "lng": 5.6557949496159265,
+    "location": "Los Angeles, USA",
+    "lat": 34.6519441618249,
+    "lng": -118.26121971338078,
     "spotifyId": "3MeQb9w6DyBDUPsCSFm0AV"
   },
   {
@@ -2059,9 +2059,9 @@ const playlists = [
   },
   {
     "name": "Synth, Pop 80s",
-    "location": "Los Angeles, USA",
-    "lat": 33.48954720932312,
-    "lng": -118.87078877177905,
+    "location": "London, UK",
+    "lat": 50.71275737992667,
+    "lng": -0.8141258019067926,
     "spotifyId": "1EYi0qpdz5Bjg4VKU72pgw"
   },
   {
@@ -2080,9 +2080,9 @@ const playlists = [
   },
   {
     "name": "Synth, Pop Oddballs",
-    "location": "Los Angeles, USA",
-    "lat": 35.61229205676372,
-    "lng": -119.56615529143137,
+    "location": "Zurich, Switzerland",
+    "lat": 47.3769,
+    "lng": 8.841700000000001,
     "spotifyId": "6PX1l0rEh8qic58XWicjCW"
   },
   {
@@ -2101,9 +2101,9 @@ const playlists = [
   },
   {
     "name": "Techno, Ambient",
-    "location": "Detroit, USA",
-    "lat": 43.62615632956257,
-    "lng": -82.4858604552957,
+    "location": "London, UK",
+    "lat": 50.31200246939699,
+    "lng": -0.022801219872663273,
     "spotifyId": "14gNQFofbgehKbjuGRDjYF"
   },
   {
@@ -2143,9 +2143,9 @@ const playlists = [
   },
   {
     "name": "Trance, Experimental",
-    "location": "Frankfurt, Germany",
-    "lat": 48.684097284429946,
-    "lng": 10.526158398039351,
+    "location": "London, UK",
+    "lat": 50.65519003887236,
+    "lng": 0.9192139359888377,
     "spotifyId": "6hbscYG3B064ISp7YG7xQN"
   },
   {
@@ -2192,65 +2192,65 @@ const playlists = [
   },
   {
     "name": "Yet They Say, Vol. 10",
-    "location": "London, UK",
-    "lat": 50.21729738102754,
-    "lng": 1.8532971238378655,
+    "location": "Cincinnati, USA",
+    "lat": 38.73701375943174,
+    "lng": -86.57984449716767,
     "spotifyId": "3C3HHuZvOnCfhajCGvRL8F"
   },
   {
     "name": "Yet They Say, Vol. 2",
-    "location": "London, UK",
-    "lat": 50.71972634446705,
-    "lng": 1.1943404100850648,
+    "location": "Cincinnati, USA",
+    "lat": 37.240490444557274,
+    "lng": -85.77421457921126,
     "spotifyId": "6AerysrLyESVjtAPpok7NY"
   },
   {
     "name": "Yet They Say, Vol. 3",
-    "location": "London, UK",
-    "lat": 51.54360295851105,
-    "lng": -1.0052842897277154,
+    "location": "Cincinnati, USA",
+    "lat": 36.75307345003684,
+    "lng": -84.024788326835,
     "spotifyId": "3X8frQ1tWM5SSmGhns0pYb"
   },
   {
     "name": "Yet They Say, Vol. 4",
-    "location": "London, UK",
-    "lat": 52.987928405452415,
-    "lng": 0.972972558514679,
+    "location": "Cincinnati, USA",
+    "lat": 37.73483905909889,
+    "lng": -82.36017240523215,
     "spotifyId": "0jmp8wWpPIkGWg5nm4LNwe"
   },
   {
     "name": "Yet They Say, Vol. 5",
-    "location": "London, UK",
-    "lat": 53.33126203862459,
-    "lng": -1.465518917669007,
+    "location": "Cincinnati, USA",
+    "lat": 39.72817652777415,
+    "lng": -81.88535207261693,
     "spotifyId": "0M6rPpreVz86WKq0Ag6kFO"
   },
   {
     "name": "Yet They Say, Vol. 6",
-    "location": "London, UK",
-    "lat": 53.305380870662475,
-    "lng": 1.5613318362476825,
+    "location": "Cincinnati, USA",
+    "lat": 41.551711172341015,
+    "lng": -83.05364362150853,
     "spotifyId": "21MO7VSPe24bjCOtdt2wrg"
   },
   {
     "name": "Yet They Say, Vol. 7",
-    "location": "London, UK",
-    "lat": 53.331924364999324,
-    "lng": -0.50013903826447,
+    "location": "Cincinnati, USA",
+    "lat": 42.00007332964783,
+    "lng": -85.29145206864126,
     "spotifyId": "3DDwCdkwUPEcDQbdwGmjVW"
   },
   {
     "name": "Yet They Say, Vol. 8",
-    "location": "London, UK",
-    "lat": 52.424238147578805,
-    "lng": 1.0032649965862175,
+    "location": "Cincinnati, USA",
+    "lat": 40.63525586988946,
+    "lng": -87.26427149648491,
     "spotifyId": "6sdKnK1EXsLMGGwikpV84x"
   },
   {
     "name": "Yet They Say, Vol. 9",
-    "location": "London, UK",
-    "lat": 49.93906561691367,
-    "lng": -1.3567629529990264,
+    "location": "Cincinnati, USA",
+    "lat": 38.15301905500528,
+    "lng": -87.67227628506717,
     "spotifyId": "6phFkBNKX9DPKjczwMr0lx"
   },
   {
@@ -2360,37 +2360,37 @@ const playlists = [
   },
   {
     "name": "Worldwide, Chiming Guitar",
-    "location": "London, UK",
-    "lat": 51.12605079938318,
-    "lng": 1.1742476139852964,
+    "location": "Central Africa",
+    "lat": 1,
+    "lng": 20.3,
     "spotifyId": "4xIaYhRmf8rV4W7Kzy0Ssn"
   },
   {
     "name": "Worldwide, Smooth Mid-Tempo R&B",
-    "location": "Detroit, USA",
-    "lat": 43.82757453479955,
-    "lng": -82.48468107037706,
+    "location": "Praia, Cape Verde",
+    "lat": 14.9315,
+    "lng": -23.2087,
     "spotifyId": "01gAq5hKTsncsfQMc5XGTR"
   },
   {
     "name": "Africa, Smooth Bangers",
-    "location": "Lagos, Nigeria",
-    "lat": 7.173543140091726,
-    "lng": 4.971078860283094,
+    "location": "Central Africa",
+    "lat": 1.3228102409047853,
+    "lng": 20.313518019206224,
     "spotifyId": "7fo8PWonDWZFvhR7ThcC9c"
   },
   {
     "name": "Africa, Acoustic Bangers",
-    "location": "Lagos, Nigeria",
-    "lat": 4.808561743280798,
-    "lng": 3.6269280946067832,
+    "location": "Central Africa",
+    "lat": 1.599744161824903,
+    "lng": 19.982480286619225,
     "spotifyId": "5ZUk2gZ2DEbrAzuIdnbs6R"
   },
   {
     "name": "Africa, Hype Bangers",
-    "location": "Lagos, Nigeria",
-    "lat": 5.948172228722814,
-    "lng": 3.3812100267527034,
+    "location": "Central Africa",
+    "lat": 1.506597385413363,
+    "lng": 19.446954713344066,
     "spotifyId": "1DnMnLRsztUXlnzqC2KhPB"
   },
   {
@@ -2402,16 +2402,16 @@ const playlists = [
   },
   {
     "name": "Worldwide, Chanting And Drumming",
-    "location": "London, UK",
-    "lat": 50.91979944939604,
-    "lng": -1.03584276889979,
+    "location": "Central Africa",
+    "lat": 0.9474632709151779,
+    "lng": 19.101534701784722,
     "spotifyId": "5zCl1AYh66oiLKfBM5yz3q"
   },
   {
     "name": "Africa, Vintage",
-    "location": "Lagos, Nigeria",
-    "lat": 6.558942854319534,
-    "lng": 2.397118361253675,
+    "location": "Central Africa",
+    "lat": 0.20535737992667535,
+    "lng": 19.313674198093207,
     "spotifyId": "3qxhw7DmQrTXEQ3O58hWGd"
   },
   {
@@ -2423,16 +2423,16 @@ const playlists = [
   },
   {
     "name": "Rock, Soft",
-    "location": "London, UK",
-    "lat": 53.26422667089967,
-    "lng": -0.6692390873800272,
+    "location": "Los Angeles, USA",
+    "lat": 34.558797385413364,
+    "lng": -118.79674528665593,
     "spotifyId": "5HpHVYYyaDgBnGlaPmLbyB"
   },
   {
     "name": "Rock, Smooth",
-    "location": "London, UK",
-    "lat": 52.491331578333686,
-    "lng": -2.0140419633219993,
+    "location": "Los Angeles, USA",
+    "lat": 33.99966327091518,
+    "lng": -119.14216529821528,
     "spotifyId": "3FWefoSEYkM6sDCwo0fAxc"
   }
 ];
