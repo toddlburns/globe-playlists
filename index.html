@@ -75,7 +75,7 @@
             z-index: 20;
         }
 
-        #instructions {
+        #about-link {
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -84,6 +84,97 @@
             opacity: 0.6;
             z-index: 20;
             text-align: center;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        #about-link:hover {
+            opacity: 1;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        /* About modal */
+        #about-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #about-overlay.open {
+            display: flex;
+        }
+
+        #about-box {
+            background: rgba(0, 10, 0, 0.95);
+            border: 2px solid #00ff00;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+        }
+
+        #about-box h2 {
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        #about-content {
+            font-size: 14px;
+            line-height: 1.8;
+            min-height: 150px;
+        }
+
+        #about-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 16px;
+            background: #00ff00;
+            margin-left: 2px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        #close-about {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        #close-about:hover {
+            background: #00ff00;
+            color: #0a0a0a;
+        }
+
+        #about-content a {
+            color: #00ff00;
+            text-decoration: none;
+        }
+
+        #about-content a:hover {
+            text-shadow: 0 0 10px #00ff00;
         }
 
         /* Playlist panel */
@@ -265,8 +356,16 @@
         <input type="text" id="search-input" placeholder="Search playlists..." autocomplete="off">
         <div id="search-dropdown"></div>
     </div>
-    <div id="instructions">Drag to rotate • Scroll to zoom • Click points to play</div>
+    <div id="about-link">[ About ]</div>
     <div id="tooltip"></div>
+
+    <div id="about-overlay">
+        <div id="about-box">
+            <button id="close-about">×</button>
+            <h2 id="about-title"></h2>
+            <div id="about-content"><span id="about-cursor"></span></div>
+        </div>
+    </div>
 
     <div id="playlist-panel">
         <button id="close-panel">×</button>
@@ -687,6 +786,98 @@
 
             renderer.render(scene, camera);
         }
+
+        // About page typewriter effect
+        const aboutLink = document.getElementById('about-link');
+        const aboutOverlay = document.getElementById('about-overlay');
+        const aboutTitle = document.getElementById('about-title');
+        const aboutContent = document.getElementById('about-content');
+        const closeAbout = document.getElementById('close-about');
+
+        const aboutTitleText = 'crambe repetita';
+        const aboutBodyText = `Hi! Thanks for coming by my playlist website. My name is Todd L. Burns and I love music! If you're anything like me, you probably like to dig for music. To find that next great song, album, mix, or whatever. Well, I've created this fun little website to share some of my own finds from around the world. I hope you enjoy my music taste just as much as I do! If you ever want to chat about music, you can reach me at <a href="mailto:todd.burns@gmail.com">todd.burns@gmail.com</a>.`;
+
+        let typewriterTimeout;
+        let isTyping = false;
+
+        function typeWriter(element, text, index, callback) {
+            if (index < text.length) {
+                // Handle HTML tags
+                if (text[index] === '<') {
+                    const tagEnd = text.indexOf('>', index);
+                    if (tagEnd !== -1) {
+                        const closingTagStart = text.indexOf('</', tagEnd);
+                        const closingTagEnd = text.indexOf('>', closingTagStart);
+                        if (closingTagStart !== -1 && closingTagEnd !== -1) {
+                            const fullTag = text.substring(index, closingTagEnd + 1);
+                            element.innerHTML = text.substring(0, closingTagEnd + 1) + '<span id="about-cursor"></span>';
+                            typewriterTimeout = setTimeout(() => typeWriter(element, text, closingTagEnd + 1, callback), 30);
+                            return;
+                        }
+                    }
+                }
+
+                element.innerHTML = text.substring(0, index + 1) + '<span id="about-cursor"></span>';
+
+                // Check if we just typed a sentence-ending punctuation
+                const char = text[index];
+                const nextChar = text[index + 1];
+                const isSentenceEnd = (char === '.' || char === '!' || char === '?') && nextChar === ' ';
+
+                let delay = 25; // Fast typing
+                if (isSentenceEnd) {
+                    delay = 1200; // Pause at end of sentence
+                }
+
+                typewriterTimeout = setTimeout(() => typeWriter(element, text, index + 1, callback), delay);
+            } else {
+                element.innerHTML = text + '<span id="about-cursor"></span>';
+                if (callback) callback();
+            }
+        }
+
+        function startAboutAnimation() {
+            aboutTitle.textContent = '';
+            aboutContent.innerHTML = '<span id="about-cursor"></span>';
+            isTyping = true;
+
+            // Type title first
+            let titleIndex = 0;
+            function typeTitle() {
+                if (titleIndex < aboutTitleText.length) {
+                    aboutTitle.textContent = aboutTitleText.substring(0, titleIndex + 1);
+                    titleIndex++;
+                    typewriterTimeout = setTimeout(typeTitle, 50);
+                } else {
+                    // Then type body
+                    setTimeout(() => {
+                        typeWriter(aboutContent, aboutBodyText, 0, () => {
+                            isTyping = false;
+                        });
+                    }, 500);
+                }
+            }
+            typeTitle();
+        }
+
+        function openAbout() {
+            aboutOverlay.classList.add('open');
+            startAboutAnimation();
+        }
+
+        function closeAboutPanel() {
+            aboutOverlay.classList.remove('open');
+            clearTimeout(typewriterTimeout);
+            isTyping = false;
+        }
+
+        aboutLink.addEventListener('click', openAbout);
+        closeAbout.addEventListener('click', closeAboutPanel);
+        aboutOverlay.addEventListener('click', function(e) {
+            if (e.target === aboutOverlay) {
+                closeAboutPanel();
+            }
+        });
 
         // Start
         init();
