@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crambe Repetita</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -73,6 +76,16 @@
             letter-spacing: 8px;
             text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
             z-index: 20;
+            text-align: center;
+        }
+
+        #title-subtitle {
+            font-family: 'Pacifico', cursive;
+            font-size: 14px;
+            text-transform: none;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            opacity: 0.8;
         }
 
         #about-link {
@@ -127,6 +140,7 @@
             letter-spacing: 4px;
             margin-bottom: 25px;
             text-shadow: 0 0 10px #00ff00;
+            text-align: center;
         }
 
         #about-content {
@@ -233,12 +247,193 @@
             border: 1px solid #00ff00;
             border-radius: 8px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         #spotify-embed iframe {
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        #spotify-embed.has-button {
+            background: rgba(0, 20, 0, 0.5);
+        }
+
+        .spotify-flame-btn {
+            position: relative;
+            padding: 20px 40px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #00ff00;
+            background: transparent;
+            border: 2px solid #00ff00;
+            cursor: pointer;
+            overflow: visible;
+            transition: all 0.3s ease;
+        }
+
+        .spotify-flame-btn::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 10%;
+            right: 10%;
+            height: 20px;
+            background: linear-gradient(to top,
+                rgba(0, 255, 0, 0.4) 0%,
+                rgba(0, 200, 0, 0.2) 40%,
+                rgba(0, 150, 0, 0.1) 70%,
+                transparent 100%
+            );
+            filter: blur(3px);
+            animation: flame-flicker 0.15s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        .spotify-flame-btn::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 20%;
+            right: 20%;
+            height: 25px;
+            background: linear-gradient(to top,
+                rgba(100, 255, 100, 0.3) 0%,
+                rgba(50, 200, 50, 0.15) 50%,
+                transparent 100%
+            );
+            filter: blur(5px);
+            animation: flame-flicker 0.2s ease-in-out infinite alternate-reverse;
+            pointer-events: none;
+        }
+
+        @keyframes flame-flicker {
+            0% {
+                transform: scaleY(1) scaleX(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scaleY(1.1) scaleX(0.95);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scaleY(0.9) scaleX(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        .spotify-flame-btn:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3),
+                        0 0 40px rgba(0, 255, 0, 0.2);
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .spotify-flame-btn:hover::before,
+        .spotify-flame-btn:hover::after {
+            animation-duration: 0.1s;
+        }
+
+        /* City browser modal for hotspots */
+        #city-browser-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 150;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #city-browser-overlay.open {
+            display: flex;
+        }
+
+        #city-browser-box {
+            background: rgba(0, 10, 0, 0.95);
+            border: 2px solid #00ff00;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+        }
+
+        #city-browser-box h2 {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
+            text-align: center;
+        }
+
+        #city-browser-list {
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        #city-browser-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #city-browser-list::-webkit-scrollbar-track {
+            background: rgba(0, 10, 0, 0.5);
+        }
+
+        #city-browser-list::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 3px;
+        }
+
+        .city-playlist-item {
+            padding: 12px 15px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .city-playlist-item:hover {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .city-playlist-count {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        #close-city-browser {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        #close-city-browser:hover {
+            background: #00ff00;
+            color: #0a0a0a;
         }
 
         /* Tooltip for hover */
@@ -373,11 +568,11 @@
         }
 
         #intro-text {
-            font-family: 'Courier New', monospace;
+            font-family: 'Pacifico', cursive;
             font-size: 48px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            text-transform: uppercase;
+            font-weight: normal;
+            letter-spacing: 4px;
+            text-transform: none;
             color: #00ff00;
             text-shadow:
                 0 0 5px #00ff00,
@@ -386,6 +581,43 @@
                 0 0 40px #00ff00,
                 0 0 80px #003300;
             opacity: 0;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+
+        #intro-text .final-a {
+            display: inline-block;
+            transition: none;
+        }
+
+        #intro-text .final-a.fly-out {
+            animation: flyOutCorner 0.8s ease-in forwards;
+        }
+
+        @keyframes flyOutCorner {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(50vw), calc(-50vh)) rotate(45deg);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #intro-text {
+                font-size: 24px;
+                letter-spacing: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #intro-text {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
         }
 
         @keyframes neon-pulse {
@@ -481,7 +713,7 @@
     <div id="container"></div>
     <div id="scanlines"></div>
     <div id="crt-overlay"></div>
-    <div id="title">[ Crambe Repetita ]</div>
+    <div id="title">[ Crambe Repetita ]<div id="title-subtitle">Playlists</div></div>
     <div id="search-container">
         <input type="text" id="search-input" placeholder="Search playlists..." autocomplete="off">
         <div id="search-dropdown"></div>
@@ -502,6 +734,15 @@
         <h2 id="panel-title">Playlist Name</h2>
         <div class="location" id="panel-location">Location</div>
         <div id="spotify-embed"></div>
+    </div>
+
+    <div id="city-browser-overlay">
+        <div id="city-browser-box">
+            <button id="close-city-browser">×</button>
+            <h2 id="city-browser-title">City Name</h2>
+            <div id="city-browser-list"></div>
+            <div class="city-playlist-count"></div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -636,23 +877,137 @@
             return new THREE.Vector3(x, y, z);
         }
 
-        function createPlaylistPoints() {
+        // Group playlists by location and identify hotspots
+        let hotspots = {};
+        let locationGroups = {};
+
+        function groupPlaylistsByLocation() {
             playlists.forEach((playlist, index) => {
-                const position = latLngToVector3(playlist.lat, playlist.lng, 1.02);
+                const loc = playlist.location;
+                if (!locationGroups[loc]) {
+                    locationGroups[loc] = [];
+                }
+                locationGroups[loc].push({ playlist, index });
+            });
 
-                // Glowing point (smaller for many playlists)
-                const pointGeometry = new THREE.SphereGeometry(0.012, 12, 12);
-                const pointMaterial = new THREE.MeshBasicMaterial({
-                    color: 0x00ff00,
-                    transparent: true,
-                    opacity: 0.9
-                });
-                const point = new THREE.Mesh(pointGeometry, pointMaterial);
-                point.position.copy(position);
-                point.userData = { playlist, index };
+            // Identify hotspots (10+ playlists)
+            Object.keys(locationGroups).forEach(loc => {
+                if (locationGroups[loc].length >= 10) {
+                    hotspots[loc] = locationGroups[loc];
+                }
+            });
+        }
 
-                globe.add(point);
-                points.push({ point, playlist });
+        function createPlaylistPoints() {
+            groupPlaylistsByLocation();
+
+            const processedLocations = new Set();
+            const minDistance = 0.04; // Minimum distance between dots
+
+            playlists.forEach((playlist, index) => {
+                const loc = playlist.location;
+
+                // Check if this is a hotspot location
+                if (hotspots[loc]) {
+                    // Only create one point per hotspot
+                    if (processedLocations.has(loc)) return;
+                    processedLocations.add(loc);
+
+                    // Calculate average position for the hotspot
+                    let avgLat = 0, avgLng = 0;
+                    hotspots[loc].forEach(item => {
+                        avgLat += item.playlist.lat;
+                        avgLng += item.playlist.lng;
+                    });
+                    avgLat /= hotspots[loc].length;
+                    avgLng /= hotspots[loc].length;
+
+                    const position = latLngToVector3(avgLat, avgLng, 1.02);
+
+                    // Create larger hotspot point with flame effect layers
+                    const hotspotGroup = new THREE.Group();
+
+                    // Core point (larger)
+                    const coreGeometry = new THREE.SphereGeometry(0.025, 16, 16);
+                    const coreMaterial = new THREE.MeshBasicMaterial({
+                        color: 0x00ff00,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+                    hotspotGroup.add(core);
+
+                    // Inner flame glow
+                    const innerFlameGeometry = new THREE.SphereGeometry(0.035, 12, 12);
+                    const innerFlameMaterial = new THREE.MeshBasicMaterial({
+                        color: 0x00cc00,
+                        transparent: true,
+                        opacity: 0.4
+                    });
+                    const innerFlame = new THREE.Mesh(innerFlameGeometry, innerFlameMaterial);
+                    hotspotGroup.add(innerFlame);
+
+                    // Outer flame glow
+                    const outerFlameGeometry = new THREE.SphereGeometry(0.045, 10, 10);
+                    const outerFlameMaterial = new THREE.MeshBasicMaterial({
+                        color: 0x009900,
+                        transparent: true,
+                        opacity: 0.2
+                    });
+                    const outerFlame = new THREE.Mesh(outerFlameGeometry, outerFlameMaterial);
+                    hotspotGroup.add(outerFlame);
+
+                    hotspotGroup.position.copy(position);
+                    hotspotGroup.userData = {
+                        isHotspot: true,
+                        location: loc,
+                        playlists: hotspots[loc],
+                        baseLat: avgLat,
+                        baseLng: avgLng
+                    };
+
+                    globe.add(hotspotGroup);
+                    points.push({ point: hotspotGroup, playlist: null, isHotspot: true, location: loc });
+                } else {
+                    // Regular point - check for spacing
+                    let position = latLngToVector3(playlist.lat, playlist.lng, 1.02);
+
+                    // Check distance from existing points and adjust if too close
+                    let attempts = 0;
+                    let offset = 0;
+                    while (attempts < 8) {
+                        let tooClose = false;
+                        for (const p of points) {
+                            const dist = position.distanceTo(p.point.position);
+                            if (dist < minDistance) {
+                                tooClose = true;
+                                break;
+                            }
+                        }
+                        if (!tooClose) break;
+
+                        // Offset the position slightly
+                        attempts++;
+                        offset += 0.8;
+                        const offsetLat = playlist.lat + (Math.sin(attempts * 1.5) * offset);
+                        const offsetLng = playlist.lng + (Math.cos(attempts * 1.5) * offset);
+                        position = latLngToVector3(offsetLat, offsetLng, 1.02);
+                    }
+
+                    // Glowing point
+                    const pointGeometry = new THREE.SphereGeometry(0.012, 12, 12);
+                    const pointMaterial = new THREE.MeshBasicMaterial({
+                        color: 0x00ff00,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    const point = new THREE.Mesh(pointGeometry, pointMaterial);
+                    point.position.copy(position);
+                    point.userData = { playlist, index, isHotspot: false };
+
+                    globe.add(point);
+                    points.push({ point, playlist, isHotspot: false });
+                }
             });
         }
 
@@ -678,10 +1033,23 @@
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-            // Check for hover on points
+            // Check for hover on points (including hotspot children)
             raycaster.setFromCamera(mouse, camera);
-            const pointMeshes = points.map(p => p.point);
-            const intersects = raycaster.intersectObjects(pointMeshes);
+
+            const hoverableObjects = [];
+            points.forEach(p => {
+                if (p.isHotspot) {
+                    p.point.children.forEach(child => {
+                        child.userData.parentPoint = p;
+                        hoverableObjects.push(child);
+                    });
+                } else {
+                    p.point.userData.parentPoint = p;
+                    hoverableObjects.push(p.point);
+                }
+            });
+
+            const intersects = raycaster.intersectObjects(hoverableObjects);
 
             // Only consider points on the front side of the globe
             const globeDistance = camera.position.z;
@@ -690,11 +1058,19 @@
             if (frontIntersects.length > 0) {
                 // Sort by distance and get the closest one
                 frontIntersects.sort((a, b) => a.distance - b.distance);
-                const playlist = frontIntersects[0].object.userData.playlist;
+                const parentPoint = frontIntersects[0].object.userData.parentPoint;
+
                 tooltip.style.display = 'block';
                 tooltip.style.left = event.clientX + 15 + 'px';
                 tooltip.style.top = event.clientY + 15 + 'px';
-                tooltip.innerHTML = `► ${playlist.name}<br><span style="opacity:0.6">${playlist.location}</span>`;
+
+                if (parentPoint.isHotspot) {
+                    const count = hotspots[parentPoint.location].length;
+                    tooltip.innerHTML = `🔥 ${parentPoint.location}<br><span style="opacity:0.6">${count} playlists - click to browse</span>`;
+                } else {
+                    const playlist = parentPoint.playlist;
+                    tooltip.innerHTML = `► ${playlist.name}<br><span style="opacity:0.6">${playlist.location}</span>`;
+                }
                 renderer.domElement.style.cursor = 'pointer';
             } else {
                 tooltip.style.display = 'none';
@@ -732,8 +1108,23 @@
             rotationVelocity = { x: 0, y: 0 };
 
             raycaster.setFromCamera(mouse, camera);
-            const pointMeshes = points.map(p => p.point);
-            const intersects = raycaster.intersectObjects(pointMeshes);
+
+            // Get all clickable objects (including children of groups for hotspots)
+            const clickableObjects = [];
+            points.forEach(p => {
+                if (p.isHotspot) {
+                    // For hotspots (groups), add children to check
+                    p.point.children.forEach(child => {
+                        child.userData.parentPoint = p;
+                        clickableObjects.push(child);
+                    });
+                } else {
+                    p.point.userData.parentPoint = p;
+                    clickableObjects.push(p.point);
+                }
+            });
+
+            const intersects = raycaster.intersectObjects(clickableObjects);
 
             if (intersects.length > 0) {
                 // Sort by distance and get the closest one
@@ -744,8 +1135,15 @@
                 const closest = intersects.find(i => i.distance < globeDistance);
 
                 if (closest) {
-                    const playlist = closest.object.userData.playlist;
-                    openPlaylist(playlist);
+                    const parentPoint = closest.object.userData.parentPoint;
+
+                    if (parentPoint.isHotspot) {
+                        // Open city browser for hotspot
+                        openCityBrowser(parentPoint.location);
+                    } else {
+                        // Open regular playlist
+                        openPlaylist(parentPoint.playlist);
+                    }
                 }
             }
         }
@@ -755,13 +1153,30 @@
             autoRotate = true;
         }
 
+        let currentPlaylistId = null;
+
         function openPlaylist(playlist) {
             panelTitle.textContent = playlist.name;
             panelLocation.textContent = playlist.location;
+            currentPlaylistId = playlist.spotifyId;
+
+            // Show flaming button instead of embed
+            spotifyEmbed.classList.add('has-button');
+            spotifyEmbed.innerHTML = `
+                <button class="spotify-flame-btn" onclick="loadSpotifyEmbed()">
+                    ► Open Player
+                </button>
+            `;
+            panel.classList.add('open');
+        }
+
+        function loadSpotifyEmbed() {
+            if (!currentPlaylistId) return;
+            spotifyEmbed.classList.remove('has-button');
             spotifyEmbed.innerHTML = `
                 <iframe
                     style="border-radius:12px"
-                    src="https://open.spotify.com/embed/playlist/${playlist.spotifyId}?utm_source=generator&theme=0"
+                    src="https://open.spotify.com/embed/playlist/${currentPlaylistId}?utm_source=generator&theme=0"
                     width="100%"
                     height="100%"
                     frameBorder="0"
@@ -770,13 +1185,57 @@
                     loading="lazy">
                 </iframe>
             `;
-            panel.classList.add('open');
         }
 
         function closePanel() {
             panel.classList.remove('open');
             spotifyEmbed.innerHTML = '';
         }
+
+        // City browser for hotspots
+        const cityBrowserOverlay = document.getElementById('city-browser-overlay');
+        const cityBrowserTitle = document.getElementById('city-browser-title');
+        const cityBrowserList = document.getElementById('city-browser-list');
+        const closeCityBrowser = document.getElementById('close-city-browser');
+
+        function openCityBrowser(location) {
+            const cityPlaylists = hotspots[location];
+            if (!cityPlaylists) return;
+
+            cityBrowserTitle.textContent = location;
+
+            cityBrowserList.innerHTML = cityPlaylists.map((item, i) => `
+                <div class="city-playlist-item" data-index="${item.index}">
+                    ► ${item.playlist.name}
+                </div>
+            `).join('');
+
+            document.querySelector('.city-playlist-count').textContent =
+                `${cityPlaylists.length} playlists`;
+
+            cityBrowserOverlay.classList.add('open');
+        }
+
+        function closeCityBrowserPanel() {
+            cityBrowserOverlay.classList.remove('open');
+        }
+
+        closeCityBrowser.addEventListener('click', closeCityBrowserPanel);
+        cityBrowserOverlay.addEventListener('click', function(e) {
+            if (e.target === cityBrowserOverlay) {
+                closeCityBrowserPanel();
+            }
+        });
+
+        cityBrowserList.addEventListener('click', function(e) {
+            const item = e.target.closest('.city-playlist-item');
+            if (item) {
+                const index = parseInt(item.dataset.index);
+                const playlist = playlists[index];
+                closeCityBrowserPanel();
+                openPlaylist(playlist);
+            }
+        });
 
         // Search functionality
         const searchInput = document.getElementById('search-input');
@@ -898,8 +1357,25 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
+        // Colors for front and back points
+        const frontColor = new THREE.Color(0x00ff00); // Bright green
+        const backColor = new THREE.Color(0x006666);  // Muted teal for back-side points
+        const hotspotFrontColors = [
+            new THREE.Color(0x00ff00),
+            new THREE.Color(0x00cc00),
+            new THREE.Color(0x009900)
+        ];
+        const hotspotBackColors = [
+            new THREE.Color(0x006666),
+            new THREE.Color(0x005555),
+            new THREE.Color(0x004444)
+        ];
+
+        let animationTime = 0;
+
         function animate() {
             requestAnimationFrame(animate);
+            animationTime += 0.05;
 
             // Auto rotation when not dragging
             if (autoRotate) {
@@ -914,6 +1390,54 @@
                 }
             }
 
+            // Update point colors based on whether they're facing the camera
+            const cameraPosition = camera.position.clone();
+            points.forEach(({ point, isHotspot }) => {
+                // Get world position of the point
+                const worldPos = new THREE.Vector3();
+                point.getWorldPosition(worldPos);
+
+                // Check if point is on the front side (facing camera)
+                const toCamera = cameraPosition.clone().sub(worldPos).normalize();
+                const pointNormal = worldPos.clone().normalize();
+                const dotProduct = toCamera.dot(pointNormal);
+                const isFront = dotProduct > 0.1;
+
+                if (isHotspot) {
+                    // Animate hotspot children with flaming effect
+                    const flameIntensity = 0.5 + 0.5 * Math.sin(animationTime * 2);
+                    const flameScale = 1 + 0.15 * Math.sin(animationTime * 3);
+
+                    point.children.forEach((child, idx) => {
+                        if (isFront) {
+                            child.material.color.copy(hotspotFrontColors[idx] || hotspotFrontColors[0]);
+                            if (idx === 0) {
+                                child.material.opacity = 0.9;
+                            } else if (idx === 1) {
+                                child.material.opacity = 0.3 + 0.2 * flameIntensity;
+                                child.scale.setScalar(flameScale);
+                            } else {
+                                child.material.opacity = 0.15 + 0.15 * flameIntensity;
+                                child.scale.setScalar(flameScale * 1.1);
+                            }
+                        } else {
+                            child.material.color.copy(hotspotBackColors[idx] || hotspotBackColors[0]);
+                            child.material.opacity = idx === 0 ? 0.4 : 0.1;
+                            child.scale.setScalar(1);
+                        }
+                    });
+                } else {
+                    // Regular point
+                    if (isFront) {
+                        point.material.color.copy(frontColor);
+                        point.material.opacity = 0.9;
+                    } else {
+                        point.material.color.copy(backColor);
+                        point.material.opacity = 0.4;
+                    }
+                }
+            });
+
             renderer.render(scene, camera);
         }
 
@@ -925,17 +1449,28 @@
         const closeAbout = document.getElementById('close-about');
 
         const aboutTitleText = 'crambe repetita';
-        const aboutBodyText = `Hi! Thanks for coming by my playlist website. My name is Todd L. Burns and I love music! If you're anything like me, you probably like to dig for music. To find that next great song, album, mix, or whatever. Well, I've created this fun little website to share some of my own finds from around the world. I hope you enjoy my music taste just as much as I do! If you ever want to chat about music, you can reach me at <a href="mailto:todd.burns@gmail.com">todd.burns@gmail.com</a>. Have a blessed day!`;
+        const aboutBodyText = `Hi!<br><br>Thanks for coming by my playlist website. My name is Todd L. Burns and I love music! If you're anything like me, you probably like to dig for music. To find that next great song, album, mix, or whatever.<br><br>Well, I've created this fun little website to share some of my own finds from around the world. I hope you enjoy my music taste just as much as I do!<br><br>If you ever want to chat about music, you can reach me at <a href="mailto:todd.burns@gmail.com">todd.burns@gmail.com</a>.<br><br>Have a blessed day!`;
 
         let typewriterTimeout;
         let isTyping = false;
+        let aboutDisappearTimeout;
+        let aboutDisappearInterval;
+        let hasDisappeared = false;
 
         function typeWriter(element, text, index, callback) {
             if (index < text.length) {
-                // Handle HTML tags
+                // Handle HTML tags (including self-closing like <br>)
                 if (text[index] === '<') {
                     const tagEnd = text.indexOf('>', index);
                     if (tagEnd !== -1) {
+                        // Check if it's a self-closing tag like <br>
+                        const tagContent = text.substring(index, tagEnd + 1);
+                        if (tagContent.match(/^<br\s*\/?>$/i)) {
+                            element.innerHTML = text.substring(0, tagEnd + 1) + '<span id="about-cursor"></span>';
+                            typewriterTimeout = setTimeout(() => typeWriter(element, text, tagEnd + 1, callback), 30);
+                            return;
+                        }
+                        // Handle opening tags with closing tags (like <a>...</a>)
                         const closingTagStart = text.indexOf('</', tagEnd);
                         const closingTagEnd = text.indexOf('>', closingTagStart);
                         if (closingTagStart !== -1 && closingTagEnd !== -1) {
@@ -952,7 +1487,7 @@
                 // Check if we just typed a sentence-ending punctuation
                 const char = text[index];
                 const nextChar = text[index + 1];
-                const isSentenceEnd = (char === '.' || char === '!' || char === '?') && nextChar === ' ';
+                const isSentenceEnd = (char === '.' || char === '!' || char === '?') && (nextChar === ' ' || nextChar === '<');
 
                 let delay = 25; // Fast typing
                 if (isSentenceEnd) {
@@ -992,12 +1527,123 @@
 
         function openAbout() {
             aboutOverlay.classList.add('open');
+            hasDisappeared = false;
             startAboutAnimation();
+
+            // Start 30 second timer for disappearing effect
+            clearTimeout(aboutDisappearTimeout);
+            clearInterval(aboutDisappearInterval);
+            aboutDisappearTimeout = setTimeout(() => {
+                if (aboutOverlay.classList.contains('open') && !isTyping) {
+                    startDisappearingEffect();
+                }
+            }, 30000);
+        }
+
+        function startDisappearingEffect() {
+            hasDisappeared = true;
+            const contentEl = aboutContent;
+            const titleEl = aboutTitle;
+
+            // Get all text content (visible letters only)
+            let allText = titleEl.textContent + contentEl.innerText;
+            let titleChars = titleEl.textContent.split('');
+            let contentHtml = contentEl.innerHTML;
+
+            // Remove cursor first
+            contentHtml = contentHtml.replace(/<span id="about-cursor"><\/span>/g, '');
+
+            // Wrap each letter in a span for individual removal
+            let letterIndex = 0;
+            titleEl.innerHTML = titleChars.map((char, i) =>
+                char === ' ' ? ' ' : `<span class="about-letter" data-index="${letterIndex++}">${char}</span>`
+            ).join('');
+
+            // Process content - wrap letters but preserve HTML tags
+            let processedContent = '';
+            let inTag = false;
+            for (let i = 0; i < contentHtml.length; i++) {
+                const char = contentHtml[i];
+                if (char === '<') {
+                    inTag = true;
+                    processedContent += char;
+                } else if (char === '>') {
+                    inTag = false;
+                    processedContent += char;
+                } else if (inTag || char === ' ' || char === '\n') {
+                    processedContent += char;
+                } else {
+                    processedContent += `<span class="about-letter" data-index="${letterIndex++}">${char}</span>`;
+                }
+            }
+            contentEl.innerHTML = processedContent;
+
+            // Get all letter spans
+            const allLetters = document.querySelectorAll('.about-letter');
+            const letterArray = Array.from(allLetters);
+
+            // Remove 3 letters per second (one every 333ms)
+            aboutDisappearInterval = setInterval(() => {
+                if (letterArray.length === 0) {
+                    clearInterval(aboutDisappearInterval);
+                    // Show the surprise messages
+                    setTimeout(() => showSurpriseMessages(), 500);
+                    return;
+                }
+
+                // Remove 3 random letters
+                for (let i = 0; i < 3 && letterArray.length > 0; i++) {
+                    const randomIndex = Math.floor(Math.random() * letterArray.length);
+                    const letter = letterArray.splice(randomIndex, 1)[0];
+                    if (letter) {
+                        letter.style.opacity = '0';
+                        letter.style.transition = 'opacity 0.2s';
+                        setTimeout(() => letter.remove(), 200);
+                    }
+                }
+            }, 333);
+        }
+
+        function showSurpriseMessages() {
+            aboutTitle.innerHTML = '';
+            aboutContent.innerHTML = '';
+
+            const messages = [
+                { text: 'I bet you thought something strange was going to happen now. Nope.', delay: 0 },
+                { text: ' Sorry!', delay: 5000 },
+                { text: ' It is what it is.', delay: 10000 }
+            ];
+
+            let currentText = '';
+
+            function typeMessage(msgIndex, charIndex) {
+                if (msgIndex >= messages.length) return;
+
+                const msg = messages[msgIndex];
+                if (charIndex === 0 && msgIndex > 0) {
+                    // Pause before next message
+                    setTimeout(() => typeMessage(msgIndex, charIndex), 5000);
+                    return;
+                }
+
+                if (charIndex < msg.text.length) {
+                    currentText += msg.text[charIndex];
+                    aboutContent.innerHTML = currentText + '<span id="about-cursor"></span>';
+                    setTimeout(() => typeMessage(msgIndex, charIndex + 1), 50);
+                } else {
+                    // Move to next message
+                    setTimeout(() => typeMessage(msgIndex + 1, 0), 0);
+                }
+            }
+
+            typeMessage(0, 0);
         }
 
         function closeAboutPanel() {
             aboutOverlay.classList.remove('open');
             clearTimeout(typewriterTimeout);
+            clearTimeout(aboutDisappearTimeout);
+            clearInterval(aboutDisappearInterval);
             isTyping = false;
         }
 
@@ -1028,26 +1674,41 @@
 
         function typeIntroText(index) {
             if (index <= introTitle.length) {
-                introText.textContent = introTitle.substring(0, index);
+                // Check if this is the final 'a'
+                if (index === introTitle.length) {
+                    // Wrap the final 'a' in a span for animation
+                    const beforeA = introTitle.substring(0, index - 1);
+                    introText.innerHTML = beforeA + '<span class="final-a">a</span>';
+                } else {
+                    introText.textContent = introTitle.substring(0, index);
+                }
                 if (index === 1) {
                     introText.classList.add('flicker-in');
                 }
                 setTimeout(() => typeIntroText(index + 1), 180);
             } else {
-                // Text fully typed, wait then flicker out
+                // Text fully typed, wait then animate the final 'a' flying out
                 setTimeout(() => {
-                    introText.classList.remove('flicker-in');
-                    introText.classList.add('flicker-out');
+                    const finalA = introText.querySelector('.final-a');
+                    if (finalA) {
+                        finalA.classList.add('fly-out');
+                    }
 
-                    // Fade out overlay after text flickers out
+                    // After 'a' flies out, flicker out the rest
                     setTimeout(() => {
-                        introOverlay.classList.add('fade-out');
+                        introText.classList.remove('flicker-in');
+                        introText.classList.add('flicker-out');
 
-                        // Remove from DOM after fade
+                        // Fade out overlay after text flickers out
                         setTimeout(() => {
-                            introOverlay.classList.add('hidden');
-                        }, 800);
-                    }, 2000);
+                            introOverlay.classList.add('fade-out');
+
+                            // Remove from DOM after fade
+                            setTimeout(() => {
+                                introOverlay.classList.add('hidden');
+                            }, 800);
+                        }, 2000);
+                    }, 800);
                 }, 1500);
             }
         }
