@@ -1586,8 +1586,8 @@
             // Update point colors based on whether they're facing the camera
             const cameraPosition = camera.position.clone();
             const isFiltering = selectedDecade !== 'all';
-            // Pulsate for highlighted points when filtering
-            const pulse = 0.7 + 0.3 * Math.sin(animationTime * 3);
+            // Subtle pulsate for highlighted points when filtering (0.88–1.0 range)
+            const pulse = 0.94 + 0.06 * Math.sin(animationTime * 3);
 
             points.forEach(({ point, isHotspot, playlist, location }, index) => {
                 // Decade transition: lerp current toward target
@@ -1601,6 +1601,7 @@
                     dt.current = dt.target;
                 }
                 const df = dt.current; // 0 = non-match, 1 = full match
+                const isMatch = dt.target > 0.5; // true target, not transitioning value
 
                 // Get world position of the point
                 const worldPos = new THREE.Vector3();
@@ -1625,16 +1626,16 @@
                             child.material.color.copy(tmpColor);
 
                             if (idx === 0) {
-                                const baseOpacity = isFiltering && df > 0.5 ? 0.9 * pulse : 0.9;
+                                const baseOpacity = isFiltering && isMatch ? 0.9 * pulse : 0.9;
                                 child.material.opacity = df > 0.01 ? baseOpacity : 0.15;
                             } else if (idx === 1) {
-                                const baseOpacity = isFiltering && df > 0.5
+                                const baseOpacity = isFiltering && isMatch
                                     ? (0.3 + 0.2 * flameIntensity) * pulse
                                     : 0.3 + 0.2 * flameIntensity;
                                 child.material.opacity = df > 0.01 ? baseOpacity : 0.05;
                                 child.scale.setScalar(flameScale);
                             } else {
-                                const baseOpacity = isFiltering && df > 0.5
+                                const baseOpacity = isFiltering && isMatch
                                     ? (0.15 + 0.15 * flameIntensity) * pulse
                                     : 0.15 + 0.15 * flameIntensity;
                                 child.material.opacity = df > 0.01 ? baseOpacity : 0.03;
@@ -1654,7 +1655,7 @@
                     if (isFront) {
                         tmpColor.copy(greyFrontColor).lerp(frontColor, df);
                         point.material.color.copy(tmpColor);
-                        if (isFiltering && df > 0.5) {
+                        if (isFiltering && isMatch) {
                             point.material.opacity = 0.9 * pulse;
                         } else {
                             point.material.opacity = df > 0.01 ? 0.9 : 0.12;
