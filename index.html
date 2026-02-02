@@ -714,6 +714,96 @@
         #intro-overlay.tv-on {
             animation: tv-on 0.6s ease-out forwards;
         }
+
+        /* Decade slider */
+        #decade-slider {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 25;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: right 0.3s ease;
+        }
+
+        #decade-slider.panel-open {
+            right: 420px;
+        }
+
+        .decade-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 255, 0, 0.4);
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 90px;
+            text-align: center;
+            position: relative;
+            transition: all 0.2s ease;
+            z-index: 1;
+        }
+
+        .decade-btn:hover {
+            border-color: #00ff00;
+            text-shadow: 0 0 8px #00ff00;
+            background: rgba(0, 255, 0, 0.05);
+        }
+
+        .decade-btn.active {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.12);
+            text-shadow: 0 0 10px #00ff00, 0 0 20px rgba(0, 255, 0, 0.4);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.15);
+            animation: decade-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes decade-pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.15); }
+            50% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+        }
+
+        .decade-btn .decade-count {
+            font-size: 9px;
+            opacity: 0.5;
+            margin-left: 4px;
+        }
+
+        /* Timeline connector line */
+        #decade-slider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: rgba(0, 255, 0, 0.15);
+            z-index: 0;
+        }
+
+        @media (max-width: 768px) {
+            #decade-slider {
+                right: 8px;
+            }
+
+            #decade-slider.panel-open {
+                display: none;
+            }
+
+            .decade-btn {
+                font-size: 9px;
+                padding: 3px 6px;
+                width: 55px;
+            }
+
+            .decade-btn .decade-count {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -758,6 +848,20 @@
         </div>
     </div>
 
+    <div id="decade-slider">
+        <button class="decade-btn active" data-decade="all">ALL<span class="decade-count">348</span></button>
+        <button class="decade-btn" data-decade="2020s">2020s<span class="decade-count">4</span></button>
+        <button class="decade-btn" data-decade="2010s">2010s<span class="decade-count">38</span></button>
+        <button class="decade-btn" data-decade="2000s">2000s<span class="decade-count">103</span></button>
+        <button class="decade-btn" data-decade="1990s">1990s<span class="decade-count">65</span></button>
+        <button class="decade-btn" data-decade="1980s">1980s<span class="decade-count">36</span></button>
+        <button class="decade-btn" data-decade="1970s">1970s<span class="decade-count">66</span></button>
+        <button class="decade-btn" data-decade="1960s">1960s<span class="decade-count">28</span></button>
+        <button class="decade-btn" data-decade="1950s">1950s<span class="decade-count">5</span></button>
+        <button class="decade-btn" data-decade="1940s">1940s<span class="decade-count">2</span></button>
+        <button class="decade-btn" data-decade="1930s">1930s<span class="decade-count">1</span></button>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="playlists-data.js"></script>
     <script>
@@ -768,6 +872,11 @@
         let autoRotate = true;
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
+
+        // Decade filter state
+        let selectedDecade = 'all';
+        let decadeTransitionProgress = {};
+        const DECADE_FADE_SPEED = 0.04;
 
         const container = document.getElementById('container');
         const tooltip = document.getElementById('tooltip');
@@ -794,6 +903,7 @@
             createGlobe();
             createPlaylistPoints();
             addEventListeners();
+            initDecadeSlider();
             animate();
         }
 
@@ -1024,6 +1134,46 @@
             });
         }
 
+        function initDecadeSlider() {
+            const buttons = document.querySelectorAll('.decade-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedDecade = btn.dataset.decade;
+                    updateDecadeTargets();
+                });
+            });
+        }
+
+        function updateDecadeTargets() {
+            points.forEach((p, index) => {
+                if (!decadeTransitionProgress[index]) {
+                    decadeTransitionProgress[index] = { current: 1.0, target: 1.0 };
+                }
+
+                if (selectedDecade === 'all') {
+                    decadeTransitionProgress[index].target = 1.0;
+                } else if (p.isHotspot) {
+                    // For hotspots: proportional based on matching playlists
+                    const cityPlaylists = hotspots[p.location];
+                    if (cityPlaylists) {
+                        const matchCount = cityPlaylists.filter(
+                            item => item.playlist.decade === selectedDecade
+                        ).length;
+                        if (matchCount > 0) {
+                            decadeTransitionProgress[index].target = Math.max(0.3, matchCount / cityPlaylists.length);
+                        } else {
+                            decadeTransitionProgress[index].target = 0.0;
+                        }
+                    }
+                } else {
+                    // Regular point
+                    decadeTransitionProgress[index].target = (p.playlist && p.playlist.decade === selectedDecade) ? 1.0 : 0.0;
+                }
+            });
+        }
+
         function addEventListeners() {
             renderer.domElement.addEventListener('mousedown', onMouseDown);
             renderer.domElement.addEventListener('mousemove', onMouseMove);
@@ -1082,7 +1232,8 @@
                     tooltip.innerHTML = `🔥 ${parentPoint.location}<br><span style="opacity:0.6">${count} playlists - click to browse</span>`;
                 } else {
                     const playlist = parentPoint.playlist;
-                    tooltip.innerHTML = `► ${playlist.name}<br><span style="opacity:0.6">${playlist.location}</span>`;
+                    const decadeHint = playlist.decade && playlist.decade !== 'unknown' ? ` · ${playlist.decade}` : '';
+                    tooltip.innerHTML = `► ${playlist.name}<br><span style="opacity:0.6">${playlist.location}${decadeHint}</span>`;
                 }
                 renderer.domElement.style.cursor = 'pointer';
             } else {
@@ -1181,6 +1332,7 @@
                 </button>
             `;
             panel.classList.add('open');
+            document.getElementById('decade-slider').classList.add('panel-open');
         }
 
         function loadSpotifyEmbed() {
@@ -1202,6 +1354,7 @@
 
         function closePanel() {
             panel.classList.remove('open');
+            document.getElementById('decade-slider').classList.remove('panel-open');
             spotifyEmbed.innerHTML = '';
         }
 
@@ -1217,11 +1370,23 @@
 
             cityBrowserTitle.textContent = location;
 
-            cityBrowserList.innerHTML = cityPlaylists.map((item, i) => `
-                <div class="city-playlist-item" data-index="${item.index}">
-                    ► ${item.playlist.name}
-                </div>
-            `).join('');
+            // Sort: matching decade first when a decade is selected
+            let sorted = [...cityPlaylists];
+            if (selectedDecade !== 'all') {
+                sorted.sort((a, b) => {
+                    const aMatch = a.playlist.decade === selectedDecade ? 0 : 1;
+                    const bMatch = b.playlist.decade === selectedDecade ? 0 : 1;
+                    return aMatch - bMatch;
+                });
+            }
+
+            cityBrowserList.innerHTML = sorted.map((item) => {
+                const dimStyle = (selectedDecade !== 'all' && item.playlist.decade !== selectedDecade)
+                    ? ' style="opacity:0.35"' : '';
+                const decadeTag = item.playlist.decade && item.playlist.decade !== 'unknown'
+                    ? ` <span style="opacity:0.5;font-size:10px">${item.playlist.decade}</span>` : '';
+                return `<div class="city-playlist-item" data-index="${item.index}"${dimStyle}>► ${item.playlist.name}${decadeTag}</div>`;
+            }).join('');
 
             document.querySelector('.city-playlist-count').textContent =
                 `${cityPlaylists.length} playlists`;
@@ -1405,7 +1570,20 @@
 
             // Update point colors based on whether they're facing the camera
             const cameraPosition = camera.position.clone();
-            points.forEach(({ point, isHotspot }) => {
+            points.forEach(({ point, isHotspot, playlist, location }, index) => {
+                // Decade transition: lerp current toward target
+                if (!decadeTransitionProgress[index]) {
+                    decadeTransitionProgress[index] = { current: 1.0, target: 1.0 };
+                }
+                const dt = decadeTransitionProgress[index];
+                if (Math.abs(dt.current - dt.target) > 0.001) {
+                    dt.current += (dt.target - dt.current) * DECADE_FADE_SPEED;
+                } else {
+                    dt.current = dt.target;
+                }
+                // Map 0→0.08, 1→1.0 so dimmed points are near-invisible but not gone
+                const decadeFactor = 0.08 + dt.current * 0.92;
+
                 // Get world position of the point
                 const worldPos = new THREE.Vector3();
                 point.getWorldPosition(worldPos);
@@ -1425,17 +1603,17 @@
                         if (isFront) {
                             child.material.color.copy(hotspotFrontColors[idx] || hotspotFrontColors[0]);
                             if (idx === 0) {
-                                child.material.opacity = 0.9;
+                                child.material.opacity = 0.9 * decadeFactor;
                             } else if (idx === 1) {
-                                child.material.opacity = 0.3 + 0.2 * flameIntensity;
+                                child.material.opacity = (0.3 + 0.2 * flameIntensity) * decadeFactor;
                                 child.scale.setScalar(flameScale);
                             } else {
-                                child.material.opacity = 0.15 + 0.15 * flameIntensity;
+                                child.material.opacity = (0.15 + 0.15 * flameIntensity) * decadeFactor;
                                 child.scale.setScalar(flameScale * 1.1);
                             }
                         } else {
                             child.material.color.copy(hotspotBackColors[idx] || hotspotBackColors[0]);
-                            child.material.opacity = idx === 0 ? 0.4 : 0.1;
+                            child.material.opacity = (idx === 0 ? 0.4 : 0.1) * decadeFactor;
                             child.scale.setScalar(1);
                         }
                     });
@@ -1443,10 +1621,10 @@
                     // Regular point
                     if (isFront) {
                         point.material.color.copy(frontColor);
-                        point.material.opacity = 0.9;
+                        point.material.opacity = 0.9 * decadeFactor;
                     } else {
                         point.material.color.copy(backColor);
-                        point.material.opacity = 0.4;
+                        point.material.opacity = 0.4 * decadeFactor;
                     }
                 }
             });
