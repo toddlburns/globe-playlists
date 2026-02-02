@@ -1548,6 +1548,21 @@
             new THREE.Color(0x005555),
             new THREE.Color(0x004444)
         ];
+        // Grey colors for dimmed/non-matching points
+        const greyFrontColor = new THREE.Color(0x333333);
+        const greyBackColor = new THREE.Color(0x1a1a1a);
+        const hotspotGreyFrontColors = [
+            new THREE.Color(0x333333),
+            new THREE.Color(0x2a2a2a),
+            new THREE.Color(0x222222)
+        ];
+        const hotspotGreyBackColors = [
+            new THREE.Color(0x1a1a1a),
+            new THREE.Color(0x151515),
+            new THREE.Color(0x111111)
+        ];
+        // Temp color for lerping
+        const tmpColor = new THREE.Color();
 
         let animationTime = 0;
 
@@ -1570,6 +1585,10 @@
 
             // Update point colors based on whether they're facing the camera
             const cameraPosition = camera.position.clone();
+            const isFiltering = selectedDecade !== 'all';
+            // Pulsate for highlighted points when filtering
+            const pulse = 0.7 + 0.3 * Math.sin(animationTime * 3);
+
             points.forEach(({ point, isHotspot, playlist, location }, index) => {
                 // Decade transition: lerp current toward target
                 if (!decadeTransitionProgress[index]) {
@@ -1581,8 +1600,7 @@
                 } else {
                     dt.current = dt.target;
                 }
-                // Map 0→0.08, 1→1.0 so dimmed points are near-invisible but not gone
-                const decadeFactor = 0.08 + dt.current * 0.92;
+                const df = dt.current; // 0 = non-match, 1 = full match
 
                 // Get world position of the point
                 const worldPos = new THREE.Vector3();
@@ -1595,36 +1613,56 @@
                 const isFront = dotProduct > 0.1;
 
                 if (isHotspot) {
-                    // Animate hotspot children with flaming effect
                     const flameIntensity = 0.5 + 0.5 * Math.sin(animationTime * 2);
                     const flameScale = 1 + 0.15 * Math.sin(animationTime * 3);
 
                     point.children.forEach((child, idx) => {
                         if (isFront) {
-                            child.material.color.copy(hotspotFrontColors[idx] || hotspotFrontColors[0]);
+                            // Lerp color: green → grey based on df
+                            const greenCol = hotspotFrontColors[idx] || hotspotFrontColors[0];
+                            const greyCol = hotspotGreyFrontColors[idx] || hotspotGreyFrontColors[0];
+                            tmpColor.copy(greyCol).lerp(greenCol, df);
+                            child.material.color.copy(tmpColor);
+
                             if (idx === 0) {
-                                child.material.opacity = 0.9 * decadeFactor;
+                                const baseOpacity = isFiltering && df > 0.5 ? 0.9 * pulse : 0.9;
+                                child.material.opacity = df > 0.01 ? baseOpacity : 0.15;
                             } else if (idx === 1) {
-                                child.material.opacity = (0.3 + 0.2 * flameIntensity) * decadeFactor;
+                                const baseOpacity = isFiltering && df > 0.5
+                                    ? (0.3 + 0.2 * flameIntensity) * pulse
+                                    : 0.3 + 0.2 * flameIntensity;
+                                child.material.opacity = df > 0.01 ? baseOpacity : 0.05;
                                 child.scale.setScalar(flameScale);
                             } else {
-                                child.material.opacity = (0.15 + 0.15 * flameIntensity) * decadeFactor;
+                                const baseOpacity = isFiltering && df > 0.5
+                                    ? (0.15 + 0.15 * flameIntensity) * pulse
+                                    : 0.15 + 0.15 * flameIntensity;
+                                child.material.opacity = df > 0.01 ? baseOpacity : 0.03;
                                 child.scale.setScalar(flameScale * 1.1);
                             }
                         } else {
-                            child.material.color.copy(hotspotBackColors[idx] || hotspotBackColors[0]);
-                            child.material.opacity = (idx === 0 ? 0.4 : 0.1) * decadeFactor;
+                            const greenCol = hotspotBackColors[idx] || hotspotBackColors[0];
+                            const greyCol = hotspotGreyBackColors[idx] || hotspotGreyBackColors[0];
+                            tmpColor.copy(greyCol).lerp(greenCol, df);
+                            child.material.color.copy(tmpColor);
+                            child.material.opacity = df > 0.01 ? (idx === 0 ? 0.4 : 0.1) : 0.05;
                             child.scale.setScalar(1);
                         }
                     });
                 } else {
                     // Regular point
                     if (isFront) {
-                        point.material.color.copy(frontColor);
-                        point.material.opacity = 0.9 * decadeFactor;
+                        tmpColor.copy(greyFrontColor).lerp(frontColor, df);
+                        point.material.color.copy(tmpColor);
+                        if (isFiltering && df > 0.5) {
+                            point.material.opacity = 0.9 * pulse;
+                        } else {
+                            point.material.opacity = df > 0.01 ? 0.9 : 0.12;
+                        }
                     } else {
-                        point.material.color.copy(backColor);
-                        point.material.opacity = 0.4 * decadeFactor;
+                        tmpColor.copy(greyBackColor).lerp(backColor, df);
+                        point.material.color.copy(tmpColor);
+                        point.material.opacity = df > 0.01 ? 0.4 : 0.06;
                     }
                 }
             });
