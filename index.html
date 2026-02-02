@@ -735,8 +735,8 @@
 
         .decade-btn {
             background: transparent;
-            border: 1px solid rgba(0, 255, 0, 0.4);
-            color: #00ff00;
+            border: 1px solid var(--decade-color-dim);
+            color: var(--decade-color);
             font-family: 'Courier New', monospace;
             font-size: 11px;
             padding: 5px 10px;
@@ -746,25 +746,27 @@
             position: relative;
             transition: all 0.2s ease;
             z-index: 1;
+            --decade-color: #00ff00;
+            --decade-color-dim: rgba(0, 255, 0, 0.4);
         }
 
         .decade-btn:hover {
-            border-color: #00ff00;
-            text-shadow: 0 0 8px #00ff00;
-            background: rgba(0, 255, 0, 0.05);
+            border-color: var(--decade-color);
+            text-shadow: 0 0 8px var(--decade-color);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .decade-btn.active {
-            border-color: #00ff00;
-            background: rgba(0, 255, 0, 0.12);
-            text-shadow: 0 0 10px #00ff00, 0 0 20px rgba(0, 255, 0, 0.4);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.15);
+            border-color: var(--decade-color);
+            background: rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 10px var(--decade-color), 0 0 20px var(--decade-color);
+            box-shadow: 0 0 10px var(--decade-color-dim);
             animation: decade-pulse 2s ease-in-out infinite;
         }
 
         @keyframes decade-pulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.15); }
-            50% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
         }
 
         .decade-btn .decade-count {
@@ -849,17 +851,17 @@
     </div>
 
     <div id="decade-slider">
-        <button class="decade-btn active" data-decade="all">ALL<span class="decade-count">348</span></button>
-        <button class="decade-btn" data-decade="2020s">2020s<span class="decade-count">4</span></button>
-        <button class="decade-btn" data-decade="2010s">2010s<span class="decade-count">38</span></button>
-        <button class="decade-btn" data-decade="2000s">2000s<span class="decade-count">103</span></button>
-        <button class="decade-btn" data-decade="1990s">1990s<span class="decade-count">65</span></button>
-        <button class="decade-btn" data-decade="1980s">1980s<span class="decade-count">36</span></button>
-        <button class="decade-btn" data-decade="1970s">1970s<span class="decade-count">66</span></button>
-        <button class="decade-btn" data-decade="1960s">1960s<span class="decade-count">28</span></button>
-        <button class="decade-btn" data-decade="1950s">1950s<span class="decade-count">5</span></button>
-        <button class="decade-btn" data-decade="1940s">1940s<span class="decade-count">2</span></button>
-        <button class="decade-btn" data-decade="1930s">1930s<span class="decade-count">1</span></button>
+        <button class="decade-btn active" data-decade="all" style="--decade-color:#00ff00;--decade-color-dim:rgba(0,255,0,0.4)">ALL<span class="decade-count">348</span></button>
+        <button class="decade-btn" data-decade="2020s" style="--decade-color:#ff2d55;--decade-color-dim:rgba(255,45,85,0.4)">2020s<span class="decade-count">4</span></button>
+        <button class="decade-btn" data-decade="2010s" style="--decade-color:#00e5ff;--decade-color-dim:rgba(0,229,255,0.4)">2010s<span class="decade-count">38</span></button>
+        <button class="decade-btn" data-decade="2000s" style="--decade-color:#ff6600;--decade-color-dim:rgba(255,102,0,0.4)">2000s<span class="decade-count">103</span></button>
+        <button class="decade-btn" data-decade="1990s" style="--decade-color:#ffff00;--decade-color-dim:rgba(255,255,0,0.4)">1990s<span class="decade-count">65</span></button>
+        <button class="decade-btn" data-decade="1980s" style="--decade-color:#ff00ff;--decade-color-dim:rgba(255,0,255,0.4)">1980s<span class="decade-count">36</span></button>
+        <button class="decade-btn" data-decade="1970s" style="--decade-color:#ffaa00;--decade-color-dim:rgba(255,170,0,0.4)">1970s<span class="decade-count">66</span></button>
+        <button class="decade-btn" data-decade="1960s" style="--decade-color:#4488ff;--decade-color-dim:rgba(68,136,255,0.4)">1960s<span class="decade-count">28</span></button>
+        <button class="decade-btn" data-decade="1950s" style="--decade-color:#ff0044;--decade-color-dim:rgba(255,0,68,0.4)">1950s<span class="decade-count">5</span></button>
+        <button class="decade-btn" data-decade="1940s" style="--decade-color:#aa44ff;--decade-color-dim:rgba(170,68,255,0.4)">1940s<span class="decade-count">2</span></button>
+        <button class="decade-btn" data-decade="1930s" style="--decade-color:#00ffaa;--decade-color-dim:rgba(0,255,170,0.4)">1930s<span class="decade-count">1</span></button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1548,6 +1550,20 @@
             new THREE.Color(0x005555),
             new THREE.Color(0x004444)
         ];
+        // Neon colors per decade (front-facing bright, back-facing muted)
+        const decadeNeonColors = {
+            '2020s': { front: new THREE.Color(0xff2d55), back: new THREE.Color(0x661122) },
+            '2010s': { front: new THREE.Color(0x00e5ff), back: new THREE.Color(0x005566) },
+            '2000s': { front: new THREE.Color(0xff6600), back: new THREE.Color(0x662200) },
+            '1990s': { front: new THREE.Color(0xffff00), back: new THREE.Color(0x666600) },
+            '1980s': { front: new THREE.Color(0xff00ff), back: new THREE.Color(0x660066) },
+            '1970s': { front: new THREE.Color(0xffaa00), back: new THREE.Color(0x664400) },
+            '1960s': { front: new THREE.Color(0x4488ff), back: new THREE.Color(0x1a3566) },
+            '1950s': { front: new THREE.Color(0xff0044), back: new THREE.Color(0x660022) },
+            '1940s': { front: new THREE.Color(0xaa44ff), back: new THREE.Color(0x441a66) },
+            '1930s': { front: new THREE.Color(0x00ffaa), back: new THREE.Color(0x006644) },
+        };
+
         // Grey colors for dimmed/non-matching points
         const greyFrontColor = new THREE.Color(0x333333);
         const greyBackColor = new THREE.Color(0x1a1a1a);
@@ -1586,8 +1602,12 @@
             // Update point colors based on whether they're facing the camera
             const cameraPosition = camera.position.clone();
             const isFiltering = selectedDecade !== 'all';
-            // Subtle pulsate for highlighted points when filtering (0.88–1.0 range)
+            // Subtle pulsate for highlighted points when filtering
             const pulse = 0.94 + 0.06 * Math.sin(animationTime * 3);
+            // Get active decade neon color (or default green)
+            const neon = isFiltering && decadeNeonColors[selectedDecade] ? decadeNeonColors[selectedDecade] : null;
+            const activeFront = neon ? neon.front : frontColor;
+            const activeBack = neon ? neon.back : backColor;
 
             points.forEach(({ point, isHotspot, playlist, location }, index) => {
                 // Decade transition: lerp current toward target
@@ -1601,7 +1621,7 @@
                     dt.current = dt.target;
                 }
                 const df = dt.current; // 0 = non-match, 1 = full match
-                const isMatch = dt.target > 0.5; // true target, not transitioning value
+                const isMatch = dt.target > 0.5;
 
                 // Get world position of the point
                 const worldPos = new THREE.Vector3();
@@ -1619,10 +1639,10 @@
 
                     point.children.forEach((child, idx) => {
                         if (isFront) {
-                            // Lerp color: green → grey based on df
-                            const greenCol = hotspotFrontColors[idx] || hotspotFrontColors[0];
+                            // Use neon color for matching, grey for non-matching
+                            const brightCol = neon ? neon.front : (hotspotFrontColors[idx] || hotspotFrontColors[0]);
                             const greyCol = hotspotGreyFrontColors[idx] || hotspotGreyFrontColors[0];
-                            tmpColor.copy(greyCol).lerp(greenCol, df);
+                            tmpColor.copy(greyCol).lerp(brightCol, df);
                             child.material.color.copy(tmpColor);
 
                             if (idx === 0) {
@@ -1642,9 +1662,9 @@
                                 child.scale.setScalar(flameScale * 1.1);
                             }
                         } else {
-                            const greenCol = hotspotBackColors[idx] || hotspotBackColors[0];
+                            const brightCol = neon ? neon.back : (hotspotBackColors[idx] || hotspotBackColors[0]);
                             const greyCol = hotspotGreyBackColors[idx] || hotspotGreyBackColors[0];
-                            tmpColor.copy(greyCol).lerp(greenCol, df);
+                            tmpColor.copy(greyCol).lerp(brightCol, df);
                             child.material.color.copy(tmpColor);
                             child.material.opacity = df > 0.01 ? (idx === 0 ? 0.4 : 0.1) : 0.05;
                             child.scale.setScalar(1);
@@ -1653,7 +1673,7 @@
                 } else {
                     // Regular point
                     if (isFront) {
-                        tmpColor.copy(greyFrontColor).lerp(frontColor, df);
+                        tmpColor.copy(greyFrontColor).lerp(activeFront, df);
                         point.material.color.copy(tmpColor);
                         if (isFiltering && isMatch) {
                             point.material.opacity = 0.9 * pulse;
@@ -1661,7 +1681,7 @@
                             point.material.opacity = df > 0.01 ? 0.9 : 0.12;
                         }
                     } else {
-                        tmpColor.copy(greyBackColor).lerp(backColor, df);
+                        tmpColor.copy(greyBackColor).lerp(activeBack, df);
                         point.material.color.copy(tmpColor);
                         point.material.opacity = df > 0.01 ? 0.4 : 0.06;
                     }
