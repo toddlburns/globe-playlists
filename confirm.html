@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Decade Check</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #1a1a1a;
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            transition: width 0.4s ease;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            width: 100%;
+            max-width: 640px;
+            padding: 30px 20px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stats {
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .stats strong {
+            color: #00ff88;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            padding: 6px 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background: #111;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .header-btn:hover {
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .header-btn.danger:hover {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        /* ===== MAIN CARD ===== */
+        .card-container {
+            width: 100%;
+            max-width: 640px;
+            padding: 10px 20px 30px;
+        }
+
+        .card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        /* Playlist identity */
+        .playlist-header {
+            padding: 24px 24px 16px;
+        }
+
+        .playlist-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        .playlist-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .playlist-location-display {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Spotify embed */
+        .spotify-section {
+            padding: 0 24px 20px;
+        }
+
+        .spotify-section iframe {
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        /* ===== DECADE PICKER ===== */
+        .decade-section {
+            padding: 0 24px 24px;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .decade-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .decade-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px 4px;
+            border: 2px solid #222;
+            border-radius: 10px;
+            background: #0a0a0a;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: center;
+        }
+
+        .decade-btn:hover {
+            border-color: #444;
+            color: #aaa;
+            transform: translateY(-1px);
+        }
+
+        .decade-btn.suggested {
+            border-color: #333;
+            color: #888;
+            background: #151515;
+        }
+
+        .decade-btn.suggested::after {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 4px;
+            background: #444;
+            border-radius: 50%;
+            margin: 4px auto 0;
+        }
+
+        .decade-btn.selected {
+            border-color: #00ff88;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.08);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+
+        .decade-btn.selected::after {
+            display: none;
+        }
+
+        /* Color coding per decade */
+        .decade-btn[data-decade="1930s"].selected,
+        .decade-btn[data-decade="1940s"].selected { border-color: #d4a574; color: #d4a574; background: rgba(212, 165, 116, 0.08); box-shadow: 0 0 20px rgba(212, 165, 116, 0.1); }
+        .decade-btn[data-decade="1950s"].selected { border-color: #e8a87c; color: #e8a87c; background: rgba(232, 168, 124, 0.08); }
+        .decade-btn[data-decade="1960s"].selected { border-color: #e8796c; color: #e8796c; background: rgba(232, 121, 108, 0.08); }
+        .decade-btn[data-decade="1970s"].selected { border-color: #f0a030; color: #f0a030; background: rgba(240, 160, 48, 0.08); }
+        .decade-btn[data-decade="1980s"].selected { border-color: #e060d0; color: #e060d0; background: rgba(224, 96, 208, 0.08); }
+        .decade-btn[data-decade="1990s"].selected { border-color: #60c0e0; color: #60c0e0; background: rgba(96, 192, 224, 0.08); }
+        .decade-btn[data-decade="2000s"].selected { border-color: #70e070; color: #70e070; background: rgba(112, 224, 112, 0.08); }
+        .decade-btn[data-decade="2010s"].selected { border-color: #8080ff; color: #8080ff; background: rgba(128, 128, 255, 0.08); }
+        .decade-btn[data-decade="2020s"].selected { border-color: #00ff88; color: #00ff88; background: rgba(0, 255, 136, 0.08); }
+
+        /* ===== LOCATION EDIT ===== */
+        .location-section {
+            padding: 0 24px 24px;
+        }
+
+        .location-input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .location-input {
+            flex: 1;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            padding: 10px 14px;
+            border: 2px solid #222;
+            border-radius: 10px;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .location-input:focus {
+            border-color: #00ccff;
+        }
+
+        .location-input.changed {
+            border-color: #f0a030;
+            color: #f0a030;
+        }
+
+        /* ===== ACTIONS ===== */
+        .actions {
+            padding: 0 24px 24px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-skip {
+            background: #1a1a1a;
+            color: #666;
+            flex: 0.4;
+        }
+
+        .btn-skip:hover { background: #222; color: #999; }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+        }
+
+        .btn-confirm:hover { box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3); }
+
+        .btn-confirm:disabled {
+            background: #222;
+            color: #444;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* ===== KEYBOARD HINT ===== */
+        .keyboard-hint {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .keyboard-hint kbd {
+            display: inline-block;
+            padding: 2px 6px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 3px;
+            margin: 0 1px;
+        }
+
+        /* ===== DONE STATE ===== */
+        .done-screen {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .done-screen h2 {
+            font-size: 32px;
+            color: #00ff88;
+            margin-bottom: 12px;
+        }
+
+        .done-screen p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .done-btn {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 14px 30px;
+            border: 2px solid #00ff88;
+            border-radius: 12px;
+            background: transparent;
+            color: #00ff88;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 5px;
+        }
+
+        .done-btn:hover {
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        /* ===== FILTER BAR ===== */
+        .filter-bar {
+            width: 100%;
+            max-width: 640px;
+            padding: 0 20px 8px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            padding: 4px 10px;
+            border: 1px solid #222;
+            border-radius: 20px;
+            background: transparent;
+            color: #444;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover { border-color: #555; color: #888; }
+        .filter-btn.active { border-color: #00ff88; color: #00ff88; }
+
+        /* ===== TRANSITION ===== */
+        .card.slide-out {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .card.slide-in {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        /* ===== CHANGED INDICATOR ===== */
+        .change-badge {
+            display: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: #f0a030;
+            margin-left: 8px;
+        }
+
+        .change-badge.visible { display: inline; }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar-container">
+    <div class="progress-bar" id="progress-bar"></div>
+</div>
+
+<div class="header">
+    <div class="stats" id="stats">Loading...</div>
+    <div class="header-actions">
+        <button class="header-btn" id="btn-export" title="Export confirmed data">export</button>
+        <button class="header-btn danger" id="btn-reset" title="Reset all progress">reset</button>
+    </div>
+</div>
+
+<div class="filter-bar" id="filter-bar">
+    <button class="filter-btn active" data-filter="unreviewed">unreviewed</button>
+    <button class="filter-btn" data-filter="all">all</button>
+    <button class="filter-btn" data-filter="changed">changed</button>
+</div>
+
+<div class="card-container" id="card-container">
+    <div class="card" id="card">
+        <div class="playlist-header">
+            <div class="playlist-number" id="playlist-number"></div>
+            <div class="playlist-name" id="playlist-name"></div>
+            <div class="playlist-location-display" id="playlist-location-display"></div>
+        </div>
+
+        <div class="spotify-section">
+            <iframe id="spotify-embed" style="border:0" width="100%" height="152"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="decade-section">
+            <div class="section-label">decade</div>
+            <div class="decade-grid" id="decade-grid"></div>
+        </div>
+
+        <div class="location-section">
+            <div class="section-label">location</div>
+            <div class="location-input-row">
+                <input type="text" class="location-input" id="location-input" spellcheck="false" />
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-skip" id="btn-skip">skip</button>
+            <button class="btn btn-confirm" id="btn-confirm" disabled>confirm</button>
+        </div>
+    </div>
+</div>
+
+<div class="done-screen" id="done-screen">
+    <h2>All done</h2>
+    <p id="done-message">You've reviewed every playlist.</p>
+    <button class="done-btn" id="done-export">Export Results</button>
+    <button class="done-btn" id="done-review-changed">Review Changed</button>
+    <button class="done-btn" id="done-start-over">Start Over</button>
+</div>
+
+<div class="keyboard-hint">
+    <kbd>1</kbd>-<kbd>0</kbd> decade &nbsp; <kbd>Enter</kbd> confirm &nbsp; <kbd>S</kbd> skip &nbsp; <kbd>&larr;</kbd> <kbd>&rarr;</kbd> navigate
+</div>
+
+<script src="playlists-data.js"></script>
+<script>
+const DECADES = ['1930s','1940s','1950s','1960s','1970s','1980s','1990s','2000s','2010s','2020s'];
+const STORAGE_KEY = 'playlist-confirmations';
+
+// State
+let confirmations = loadConfirmations();
+let currentFilter = 'unreviewed';
+let filteredIndices = [];
+let filteredPos = 0;
+let selectedDecade = null;
+
+// Build decade buttons
+const decadeGrid = document.getElementById('decade-grid');
+DECADES.forEach((d, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'decade-btn';
+    btn.dataset.decade = d;
+    btn.textContent = d.replace('s','');
+    btn.addEventListener('click', () => selectDecade(d));
+    decadeGrid.appendChild(btn);
+});
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        buildFilteredList();
+        filteredPos = 0;
+        showCurrent();
+    });
+});
+
+function loadConfirmations() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch { return {}; }
+}
+
+function saveConfirmations() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(confirmations));
+}
+
+function buildFilteredList() {
+    filteredIndices = [];
+    playlists.forEach((p, i) => {
+        const c = confirmations[p.spotifyId];
+        if (currentFilter === 'unreviewed' && !c) filteredIndices.push(i);
+        else if (currentFilter === 'all') filteredIndices.push(i);
+        else if (currentFilter === 'changed' && c && (c.decade !== p.decade || c.location !== p.location)) filteredIndices.push(i);
+    });
+}
+
+function selectDecade(d) {
+    selectedDecade = d;
+    document.querySelectorAll('.decade-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.decade === d);
+    });
+    updateConfirmEnabled();
+}
+
+function updateConfirmEnabled() {
+    document.getElementById('btn-confirm').disabled = !selectedDecade;
+}
+
+function showCurrent() {
+    const total = playlists.length;
+    const reviewed = Object.keys(confirmations).length;
+    const changed = Object.values(confirmations).filter((c, i) => {
+        const p = playlists.find(pl => pl.spotifyId === Object.keys(confirmations)[i]);
+        return false; // recalculated below
+    }).length;
+
+    let changedCount = 0;
+    for (const [id, c] of Object.entries(confirmations)) {
+        const p = playlists.find(pl => pl.spotifyId === id);
+        if (p && (c.decade !== p.decade || c.location !== p.location)) changedCount++;
+    }
+
+    document.getElementById('stats').innerHTML =
+        `<strong>${reviewed}</strong>/${total} reviewed &nbsp; ${changedCount > 0 ? `<span style="color:#f0a030">${changedCount} changed</span>` : ''}`;
+
+    document.getElementById('progress-bar').style.width = `${(reviewed / total) * 100}%`;
+
+    if (filteredIndices.length === 0) {
+        document.getElementById('card-container').style.display = 'none';
+        document.getElementById('done-screen').style.display = 'block';
+        if (currentFilter === 'unreviewed') {
+            document.getElementById('done-message').textContent = "You've reviewed every playlist.";
+        } else if (currentFilter === 'changed') {
+            document.getElementById('done-message').textContent = 'No changed playlists to review.';
+        }
+        return;
+    }
+
+    document.getElementById('card-container').style.display = 'block';
+    document.getElementById('done-screen').style.display = 'none';
+
+    if (filteredPos >= filteredIndices.length) filteredPos = filteredIndices.length - 1;
+    if (filteredPos < 0) filteredPos = 0;
+
+    const idx = filteredIndices[filteredPos];
+    const p = playlists[idx];
+    const c = confirmations[p.spotifyId];
+
+    document.getElementById('playlist-number').textContent = `${filteredPos + 1} of ${filteredIndices.length} (${currentFilter})`;
+    document.getElementById('playlist-name').textContent = p.name;
+    document.getElementById('playlist-location-display').textContent = p.location;
+
+    // Spotify embed
+    document.getElementById('spotify-embed').src =
+        `https://open.spotify.com/embed/playlist/${p.spotifyId}?utm_source=generator&theme=0`;
+
+    // Decade - preselect confirmed or original
+    selectedDecade = c ? c.decade : null;
+    document.querySelectorAll('.decade-btn').forEach(btn => {
+        btn.classList.remove('selected', 'suggested');
+        if (btn.dataset.decade === p.decade) btn.classList.add('suggested');
+        if (c && btn.dataset.decade === c.decade) btn.classList.add('selected');
+    });
+
+    // Location
+    const locInput = document.getElementById('location-input');
+    locInput.value = c ? c.location : p.location;
+    locInput.classList.toggle('changed', locInput.value !== p.location);
+    locInput.dataset.original = p.location;
+
+    updateConfirmEnabled();
+}
+
+// Location change tracking
+document.getElementById('location-input').addEventListener('input', function() {
+    this.classList.toggle('changed', this.value !== this.dataset.original);
+});
+
+// Confirm
+document.getElementById('btn-confirm').addEventListener('click', confirmCurrent);
+
+function confirmCurrent() {
+    if (!selectedDecade) return;
+    const idx = filteredIndices[filteredPos];
+    const p = playlists[idx];
+    const loc = document.getElementById('location-input').value.trim() || p.location;
+
+    confirmations[p.spotifyId] = {
+        decade: selectedDecade,
+        location: loc,
+        name: p.name,
+        originalDecade: p.decade,
+        originalLocation: p.location
+    };
+    saveConfirmations();
+
+    if (currentFilter === 'unreviewed' || currentFilter === 'changed') {
+        // Remove from filtered list and show next
+        buildFilteredList();
+        if (filteredPos >= filteredIndices.length) filteredPos = filteredIndices.length - 1;
+    } else {
+        // Stay in place, just move forward
+        filteredPos++;
+        if (filteredPos >= filteredIndices.length) filteredPos = 0;
+    }
+
+    transitionTo(() => showCurrent());
+}
+
+// Skip
+document.getElementById('btn-skip').addEventListener('click', () => {
+    filteredPos++;
+    if (filteredPos >= filteredIndices.length) filteredPos = 0;
+    transitionTo(() => showCurrent());
+});
+
+function transitionTo(fn) {
+    const card = document.getElementById('card');
+    card.classList.add('slide-out');
+    setTimeout(() => {
+        fn();
+        card.classList.remove('slide-out');
+        card.classList.add('slide-in');
+        setTimeout(() => card.classList.remove('slide-in'), 20);
+    }, 150);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    // Don't capture if typing in input
+    if (e.target.tagName === 'INPUT') {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            confirmCurrent();
+        }
+        return;
+    }
+
+    // 1-9, 0 for decades
+    const digitMap = {'1':'1930s','2':'1940s','3':'1950s','4':'1960s','5':'1970s','6':'1980s','7':'1990s','8':'2000s','9':'2010s','0':'2020s'};
+    if (digitMap[e.key]) {
+        selectDecade(digitMap[e.key]);
+        return;
+    }
+
+    if (e.key === 'Enter') confirmCurrent();
+    if (e.key === 's' || e.key === 'S') {
+        filteredPos++;
+        if (filteredPos >= filteredIndices.length) filteredPos = 0;
+        transitionTo(() => showCurrent());
+    }
+    if (e.key === 'ArrowRight') {
+        filteredPos++;
+        if (filteredPos >= filteredIndices.length) filteredPos = 0;
+        transitionTo(() => showCurrent());
+    }
+    if (e.key === 'ArrowLeft') {
+        filteredPos--;
+        if (filteredPos < 0) filteredPos = filteredIndices.length - 1;
+        transitionTo(() => showCurrent());
+    }
+});
+
+// Export
+function exportData() {
+    const result = playlists.map(p => {
+        const c = confirmations[p.spotifyId];
+        return {
+            name: p.name,
+            location: c ? c.location : p.location,
+            lat: p.lat,
+            lng: p.lng,
+            spotifyId: p.spotifyId,
+            decade: c ? c.decade : p.decade,
+            confirmed: !!c,
+            decadeChanged: c ? c.decade !== p.decade : false,
+            locationChanged: c ? c.location !== p.location : false
+        };
+    });
+
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'confirmed-playlists.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+document.getElementById('btn-export').addEventListener('click', exportData);
+document.getElementById('done-export').addEventListener('click', exportData);
+
+// Reset
+document.getElementById('btn-reset').addEventListener('click', () => {
+    if (confirm('Reset all progress? This cannot be undone.')) {
+        confirmations = {};
+        saveConfirmations();
+        buildFilteredList();
+        filteredPos = 0;
+        showCurrent();
+    }
+});
+
+// Done screen buttons
+document.getElementById('done-review-changed').addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-filter="changed"]').classList.add('active');
+    currentFilter = 'changed';
+    buildFilteredList();
+    filteredPos = 0;
+    showCurrent();
+});
+
+document.getElementById('done-start-over').addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+    currentFilter = 'all';
+    buildFilteredList();
+    filteredPos = 0;
+    showCurrent();
+});
+
+// Init
+buildFilteredList();
+showCurrent();
+</script>
+</body>
+</html>
