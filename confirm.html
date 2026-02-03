@@ -213,6 +213,42 @@
         .decade-btn[data-decade="2010s"].selected { border-color: #8080ff; color: #8080ff; background: rgba(128, 128, 255, 0.08); }
         .decade-btn[data-decade="2020s"].selected { border-color: #00ff88; color: #00ff88; background: rgba(0, 255, 136, 0.08); }
 
+        /* ===== CUSTOM DECADE INPUT ===== */
+        .custom-decade-row {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .custom-decade-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: #444;
+        }
+
+        .custom-decade-input {
+            width: 100px;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            padding: 8px 12px;
+            border: 2px solid #222;
+            border-radius: 8px;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .custom-decade-input:focus {
+            border-color: #00ccff;
+        }
+
+        .custom-decade-input.active {
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
         /* ===== LOCATION EDIT ===== */
         .location-section {
             padding: 0 24px 24px;
@@ -427,6 +463,10 @@
         <div class="decade-section">
             <div class="section-label">decade</div>
             <div class="decade-grid" id="decade-grid"></div>
+            <div class="custom-decade-row">
+                <span class="custom-decade-label">or type:</span>
+                <input type="text" class="custom-decade-input" id="custom-decade-input" placeholder="e.g. 1920s" spellcheck="false" />
+            </div>
         </div>
 
         <div class="location-section">
@@ -510,13 +550,35 @@ function buildFilteredList() {
     });
 }
 
-function selectDecade(d) {
+function selectDecade(d, fromCustomInput = false) {
     selectedDecade = d;
     document.querySelectorAll('.decade-btn').forEach(btn => {
         btn.classList.toggle('selected', btn.dataset.decade === d);
     });
+    const customInput = document.getElementById('custom-decade-input');
+    if (!fromCustomInput) {
+        customInput.value = '';
+        customInput.classList.remove('active');
+    } else {
+        customInput.classList.add('active');
+    }
     updateConfirmEnabled();
 }
+
+// Custom decade input
+document.getElementById('custom-decade-input').addEventListener('input', function() {
+    const val = this.value.trim();
+    if (val) {
+        // Clear button selection
+        document.querySelectorAll('.decade-btn').forEach(btn => btn.classList.remove('selected'));
+        selectedDecade = val;
+        this.classList.add('active');
+    } else {
+        selectedDecade = null;
+        this.classList.remove('active');
+    }
+    updateConfirmEnabled();
+});
 
 function updateConfirmEnabled() {
     document.getElementById('btn-confirm').disabled = !selectedDecade;
@@ -572,11 +634,23 @@ function showCurrent() {
 
     // Decade - preselect confirmed or original
     selectedDecade = c ? c.decade : null;
+    const customDecadeInput = document.getElementById('custom-decade-input');
+    const isCustomDecade = c && !DECADES.includes(c.decade);
+
     document.querySelectorAll('.decade-btn').forEach(btn => {
         btn.classList.remove('selected', 'suggested');
         if (btn.dataset.decade === p.decade) btn.classList.add('suggested');
-        if (c && btn.dataset.decade === c.decade) btn.classList.add('selected');
+        if (c && !isCustomDecade && btn.dataset.decade === c.decade) btn.classList.add('selected');
     });
+
+    // Handle custom decade
+    if (isCustomDecade) {
+        customDecadeInput.value = c.decade;
+        customDecadeInput.classList.add('active');
+    } else {
+        customDecadeInput.value = '';
+        customDecadeInput.classList.remove('active');
+    }
 
     // Location
     const locInput = document.getElementById('location-input');
